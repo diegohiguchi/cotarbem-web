@@ -1,0 +1,51 @@
+<section>
+  <div class="page-header">
+    <h3>{{'Segmentos/Sub-Segmentos'}}</h3>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.segmentoForm" ng-submit="vm.save(vm.form.segmentoForm.$valid)" novalidate>
+      <fieldset>
+        <div class="row">
+          <div class="col-md-1">
+            <label for="segmento">Segmentos</label>
+          </div>
+          <div class="col-md-2">
+            <div ng-dropdown-multiselect="" name="segmento" id="segmento" options="vm.segmentos" selected-model="vm.usuario.segmentos"
+                 extra-settings="vm.configuracoesSegmento" events="vm.eventosSegmento"></div>
+          </div>
+          <div class="col-md-2" style="text-align: right">
+            <label for="subSegmento">Sub-Segmentos</label>
+          </div>
+          <div class="col-md-2">
+            <div ng-dropdown-multiselect="" name="subSegmento" id="subSegmento" options="vm.subSegmentos" selected-model="vm.usuario.subSegmentos"
+                 extra-settings="vm.configuracoesSubSegmento"></div>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-success">Salvar</button>
+          </div>
+          <div ng-show="vm.error" class="text-danger">
+            <strong ng-bind="vm.error"></strong>
+          </div>
+        </div>
+        <br>
+      </fieldset>
+    </form>
+    <table class="table table-striped" ng-show="vm.listaSegmentos.length">
+      <thead>
+      <tr>
+        <th style="width: 30%">Segmentos</th>
+        <th style="width: 50%">Sub-Segmentos</th>
+      </tr>
+      </thead>
+      <tbody >
+      <tr ng-repeat="item in vm.listaSegmentos | orderBy:'segmento.nome'">
+        <td>{{item.segmento.nome}}</td>
+        <td>{{item.nome}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div ng-show="vm.listaSegmentos.length">
+      <button type="button" ng-click="vm.remover()" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Remover Todos</button>
+    </div>
+  </div>
+</section>

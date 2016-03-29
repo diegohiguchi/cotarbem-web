@@ -1,0 +1,44 @@
+<section>
+  <div class="page-header">
+    <h3 data-ng-bind="vm.solicitacao.subSegmento.nome"></h3>
+  </div>
+  <table class="table table-striped" ng-show="vm.solicitacao.produtos.length">
+    <thead>
+    <tr>
+      <th style="width: 40%">Nome do Produto</th>
+      <th style="width: 15%">Tipo da Cotação</th>
+      <th style="width: 15%">Quantidade</th>
+      <th style="width: 15%">Data de Entrega</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="produto in vm.solicitacao.produtos">
+      <td>{{produto.nome}}</td>
+      <td>{{produto.tipoCotacao}}</td>
+      <td>{{produto.quantidade}}</td>
+      <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="pull-right"
+       data-ng-show="vm.solicitacao.isCurrentUserOwner">
+   <!-- <a class="btn btn-primary"
+       data-ui-sref="solicitacoes.edit({ solicitacoId: vm.solicitacao._id })">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>-->
+    <a class="btn btn-danger" title="Apagar" data-ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Criado em
+      <span data-ng-bind="vm.solicitacao.dataCadastro | date:'dd/MM/yyyy hh:mm:ss'"></span>
+      por
+      <span data-ng-if="vm.solicitacao.user"
+            data-ng-bind="vm.solicitacao.user.displayName"></span>
+      <span data-ng-if="!vm.solicitacao.user">Deleted User</span>
+    </em>
+  </small>
+  <p class="lead" data-ng-bind="vm.solicitacao.content"></p>
+</section>

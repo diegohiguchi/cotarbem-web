@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title></title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    table, td, th {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+<!--<p>Olá {{fornecedor.nome}},</p>-->
+<br />
+<p>
+<!--  O(A) {{cliente.nome}} tem interesse em comprar o(s) seguinte(s) produto(s):-->
+</p>
+<br />
+{{produtos}}
+<!--<table>
+  <thead>
+  <tr>
+    <th>Nome do Produto</th>
+    <th>Tipo da Cotação</th>
+    <th>Quantidade</th>
+    <th>Data de Entrega</th>
+    <th>Valor</th>
+    <th>Valor Total</th>
+  </tr>
+  </thead>
+  <tbody ng-repeat="produto in produtos">
+  <tr>
+    <td>{{produto}}</td>
+    &lt;!&ndash;<td>{{fornecedor.produto.tipoCotacao}}</td>
+    <td>{{fornecedor.produto.quantidade}}</td>
+    <td>{{fornecedor.produto.dataEntrega}}</td>
+    <td>{{fornecedor.produto.valor}}</td>
+    <td>{{fornecedor.produto.total}}</td>&ndash;&gt;
+  </tr>
+  </tbody>
+</table>-->
+<br />
+<p>
+ <!-- <strong>Entre em contato pelo e-mail {{cliente.email}}</strong>-->
+</p>
+<br />
+<br />
+<p>O {{appName}} é o Time de Suporte</p>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.segmento._id ? 'Editar Segmento' : 'Novo Segmento'}}</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.segmentoForm" class="form-horizontal" ng-submit="vm.save(vm.form.segmentoForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="nome">Segmento</label>
+          <input name="nome" type="text" ng-model="vm.segmento.nome" id="nome" class="form-control" placeholder="Nome" required>
+          <div ng-messages="vm.form.segmentoForm.nome.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Informe o nome do Segmento.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label><input type="checkbox" value="" ng-model="vm.segmento.ativo"> Ativo</label>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.segmento._id ? 'Alterar' : 'Criar'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,168 @@
+<!--
+<section>
+  <div class="page-header">
+    <h3 data-ng-bind="vm.cotacao.subSegmento.nome"></h3>
+  </div>
+  <table class="table table-striped" ng-show="vm.cotacao.produtos.length">
+    <thead>
+    <tr>
+      <th style="width: 25%">Nome do Produto</th>
+      <th style="width: 15%">Tipo da Cotação</th>
+      <th style="width: 10%">Quantidade</th>
+      <th style="width: 15%">Data de Entrega</th>
+      <th style="width: 10%">Disponível</th>
+      <th style="width: 15%">Valor</th>
+      <th style="width: 15%">Valor Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="produto in vm.cotacao.produtos">
+      <td>{{produto.nome}}</td>
+      <td>{{produto.tipoCotacao}}</td>
+      <td>{{produto.quantidade}}</td>
+      <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
+      <td><input type="checkbox" ng-model="produto.disponivel"></td>
+      <td>
+        <input class="form-control" type="text" ng-model="produto.valor" placeholder="R$ 0,00" ui-money-mask="2" maxlength="13">
+      </td>
+      <td>{{produto.valor * produto.quantidade | currency}}
+    </tr>
+    </tbody>
+  </table>
+  <div class="pull-right">
+    <span>Total: {{ vm.calcularSomaTotal() | currency}}</span>
+  </div>
+  <small>
+    <em class="text-muted">
+      Solicitado em
+      <time data-ng-bind="vm.cotacao.dataCadastro | date:'dd/MM/yyyy'"></time>
+      <i class="glyphicon glyphicon-time"></i></td>
+      <span  data-ng-bind="vm.cotacao.dataCadastro | date:' HH:mm'"></span>
+
+      -
+      <span data-ng-if="vm.cotacao.user"
+            data-ng-bind="vm.cotacao.user.displayName"></span>
+      <span data-ng-if="!vm.cotacao.user">Deleted User</span>
+    </em>
+  </small>
+  <p></p>
+  <div>
+    <button class="btn btn-success" ng-click="vm.save(vm.cotacao)">Salvar</button>
+  </div>
+  <p class="lead" data-ng-bind="vm.cotacao.content"></p>
+</section>
+-->
+<section>
+  <div class="page-header">
+    <h3 data-ng-bind="vm.solicitacao.subSegmento.nome"></h3>
+  </div>
+  <table class="table table-striped" ng-show="vm.solicitacao.produtos.length">
+    <thead>
+    <tr>
+      <th style="width: 25%">Nome do Produto</th>
+      <th style="width: 15%">Tipo da Cotação</th>
+      <th style="width: 10%">Quantidade</th>
+      <th style="width: 15%">Data de Entrega</th>
+      <th style="width: 10%">Disponível</th>
+      <th style="width: 15%">Valor</th>
+      <th style="width: 15%">Valor Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="produto in vm.solicitacao.produtos">
+      <td>{{produto.nome}}</td>
+      <td>{{produto.tipoCotacao}}</td>
+      <td>{{produto.quantidade}}</td>
+      <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
+      <td><input type="checkbox" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.disponivel"></td>
+      <td>
+        <input class="form-control" type="text" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.valor" placeholder="R$ 0,00" ui-money-mask="2" maxlength="13">
+      </td>
+      <td>{{produto.valor * produto.quantidade | currency}}
+    </tr>
+    </tbody>
+  </table>
+ <!-- <div class="pull-right">
+    <span>Total: {{vm.calcularSomaTotal() | currency}}</span>
+  </div>-->
+  <small>
+    <em class="text-muted">
+      Solicitado em
+      <time data-ng-bind="vm.solicitacao.dataCadastro | date:'dd/MM/yyyy'"></time>
+      <i class="glyphicon glyphicon-time"></i></td>
+      <span  data-ng-bind="vm.solicitacao.dataCadastro | date:' HH:mm'"></span>
+     <!-- <span data-ng-if="vm.solicitacao.user"
+            data-ng-bind="vm.solicitacao.user.displayName"></span>
+      <span data-ng-if="!vm.solicitacao.user">Deleted User</span>-->
+    </em>
+  </small>
+  <p></p>
+  <div>
+    <button class="btn btn-success" ng-disabled="!vm.solicitacao.ativo" ng-click="vm.save(vm.solicitacao)">Salvar</button>
+    <button class="btn btn-default" ng-click="vm.voltar()">Voltar</button>
+  </div>
+
+  </div>
+  <p class="lead" data-ng-bind="vm.solicitacao.content"></p>
+
+  <table class="table table-striped" ng-show="!(vm.cotacoes | isEmpty)" >
+    <thead>
+    <tr>
+      <th style="width: 15%">Empresa</th>
+      <th style="width: 20%">Nome do Produto</th>
+      <th style="width: 15%">Tipo da Cotação</th>
+      <th style="width: 8%">Quantidade</th>
+      <th style="width: 12%">Data de Entrega</th>
+      <th style="width: 10%">Disponível</th>
+      <th style="width: 12%">Valor</th>
+      <th style="width: 15%">Valor Total</th>
+    </tr>
+    </thead>
+    <!--<tbody ng-repeat="cotacoes in vm.cotacoes">
+    <tr ng-repeat="produto in cotacoes.produtos">
+      <td>{{cotacoes.user.displayName}}</td>
+      <td>{{produto.nome}}</td>
+      <td>{{produto.tipoCotacao}}</td>
+      <td>{{produto.quantidade}}</td>
+      <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
+      <td><input ng-disabled="true" type="checkbox" ng-model="produto.disponivel"></td>
+      <td>
+        {{produto.valor | currency}}
+      </td>
+      <td>{{produto.valor * produto.quantidade | currency}}
+    </tr>
+    </tbody>-->
+    <tbody ng-repeat="cotacao in vm.cotacoes">
+    <tr ng-repeat="produto in cotacao">
+      <td>{{produto.user.displayName}}</td>
+      <td>{{produto.nome}}</td>
+      <td>{{produto.tipoCotacao}}</td>
+      <td>{{produto.quantidade}}</td>
+      <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
+      <td><input ng-disabled="true" type="checkbox" ng-model="produto.disponivel"></td>
+      <td>
+        {{produto.valor | currency}}
+      </td>
+      <td>{{produto.valor * produto.quantidade | currency}}
+    </tr>
+    </tbody>
+  </table>
+  <!--<div class="pull-right">
+    <span>Total: {{vm.calcularSomaTotal() | currency}}</span>
+  </div>-->
+  <!--<small>
+    <em class="text-muted">
+      Solicitado em
+      <time data-ng-bind="vm.solicitacao.dataCadastro | date:'dd/MM/yyyy'"></time>
+      <i class="glyphicon glyphicon-time"></i></td>
+      <span  data-ng-bind="vm.solicitacao.dataCadastro | date:' HH:mm'"></span>
+
+      -
+      <span data-ng-if="vm.solicitacao.user"
+            data-ng-bind="vm.solicitacao.user.displayName"></span>
+      <span data-ng-if="!vm.solicitacao.user">Deleted User</span>
+    </em>
+  </small>
+  <p></p>
+  <p class="lead" data-ng-bind="vm.solicitacao.content"></p>-->
+</section>

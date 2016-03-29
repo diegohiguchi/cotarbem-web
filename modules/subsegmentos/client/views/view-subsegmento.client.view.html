@@ -1,0 +1,27 @@
+<section>
+  <div class="page-header">
+    <h1 data-ng-bind="vm.subsegmento.nome"></h1>
+    <h3 data-ng-bind="vm.subsegmento.segmento.nome"></h3>
+  </div>
+  <div class="pull-right"
+       data-ng-show="vm.subsegmento.isCurrentUserOwner">
+    <a class="btn btn-primary"
+       data-ui-sref="subsegmentos.edit({ subsegmentoId: vm.subsegmento._id })">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" data-ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Criado em
+      <span data-ng-bind="vm.subsegmento.dataCadastro | date:'mediumDate'"></span>
+      por
+      <span data-ng-if="vm.subsegmento.user"
+            data-ng-bind="vm.subsegmento.user.displayName"></span>
+      <span data-ng-if="!vm.subsegmento.user">Deleted User</span>
+    </em>
+  </small>
+  <p class="lead" data-ng-bind="vm.subsegmento.content"></p>
+</section>

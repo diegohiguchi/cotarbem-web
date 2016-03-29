@@ -1,0 +1,48 @@
+<!--
+<section>
+  <div class="page-header">
+    <h3>Cotações</h3>
+  </div>
+  <div class="list-group">
+    <a data-ng-repeat="cotacao in vm.cotacoes"
+       data-ui-sref="cotacoesFornecedor.view({ cotacaoId: cotacao._id })"
+       class="list-group-item" ng-show="cotacao.solicitacao.ativo">
+      <small class="list-group-item-text">
+        Criado em
+        <span data-ng-bind="cotacao.dataCadastro | date:'dd/MM/yyyy'"></span>
+        <i class="glyphicon glyphicon-time"></i></td>
+        <span data-ng-bind="cotacao.dataCadastro | date:'HH:mm:ss'"></span>
+        por
+        <span data-ng-if="cotacao.user" data-ng-bind="cotacao.user.displayName"></span>
+        <span data-ng-if="!cotacao.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" data-ng-bind="cotacao.subSegmento.nome"></h4>
+    </a>
+  </div>
+</section>
+-->
+<section>
+  <div class="page-header">
+    <h3>Cotações</h3>
+  </div>
+  <div class="list-group">
+    <a data-ng-repeat="solicitacao in vm.pagedItems"
+       data-ui-sref="cotacoesFornecedor.view({ solicitacaoId: solicitacao._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Criado em
+        <span data-ng-bind="solicitacao.dataCadastro | date:'dd/MM/yyyy'"></span>
+        <i class="glyphicon glyphicon-time"></i></td>
+        <span data-ng-bind="solicitacao.dataCadastro | date:'HH:mm'"></span>
+        por
+        <span data-ng-if="solicitacao.user" data-ng-bind="solicitacao.user.displayName"></span>
+        <span data-ng-if="!solicitacao.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" data-ng-bind="solicitacao.subSegmento.nome"></h4>
+      Status: {{solicitacao.ativo | status}}
+      <span my-current-time="solicitacao"></span>
+    </a>
+
+    <pagination boundary-links="true" max-size="5" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></pagination>
+  </div>
+</section>

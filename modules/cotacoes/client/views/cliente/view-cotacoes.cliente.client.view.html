@@ -1,0 +1,80 @@
+<style>
+  .right-inner-addon {
+    position: relative;
+    width: 40%;
+  }
+  .right-inner-addon input {
+    padding-right: 5px;
+    padding-left: 33px;
+  }
+  .right-inner-addon i {
+    position: absolute;
+    padding: 10px 12px;
+    pointer-events: none;
+  }
+</style>
+<section>
+  <div class="page-header">
+    <h3 data-ng-bind="vm.solicitacao.subSegmento.nome"></h3>
+    <div class="right-inner-addon" ng-show="!(vm.cotacoes | isEmpty)">
+      <i class="glyphicon glyphicon-search"></i>
+      <input type="search"
+             class="form-control"
+             ng-model="searchText"
+             placeholder="Procurar por Empresa, Produto ou Tipo da Cotação" />
+    </div>
+  </div>
+  <div ng-show="(vm.cotacoes | isEmpty)">
+    <i>Não houve cotações</i>
+    <hr>
+  </div>
+  <table class="table table-striped" ng-show="!(vm.cotacoes | isEmpty)">
+    <thead>
+    <tr>
+      <th style="width: 3%"></th>
+      <th style="width: 15%">Empresa</th>
+      <th style="width: 20%">Nome do Produto</th>
+      <th style="width: 12%">Tipo da Cotação</th>
+      <th style="width: 8%">Quantidade</th>
+      <th style="width: 12%">Data de Entrega</th>
+      <th style="width: 10%">Disponível</th>
+      <th style="width: 12%">Valor</th>
+      <th style="width: 15%">Valor Total</th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="cotacao in vm.cotacoes">
+    <tr ng-repeat="produto in cotacao | filter:searchText">
+      <td><input type="checkbox" ng-click="vm.adicionarProduto(produto)"></td>
+      <td>{{produto.user.displayName}}</td>
+      <td>{{produto.nome}}</td>
+      <td>{{produto.tipoCotacao}}</td>
+      <td>{{produto.quantidade}}</td>
+      <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
+      <td><input ng-disabled="true" type="checkbox" ng-model="produto.disponivel"></td>
+      <td>
+        {{produto.valor | currency}}
+      </td>
+      <td>{{produto.valor * produto.quantidade | currency}}
+    </tr>
+    </tbody>
+  </table>
+  <small>
+    <em class="text-muted">
+      Solicitado em
+      <time data-ng-bind="vm.solicitacao.dataCadastro | date:'dd/MM/yyyy'"></time>
+      <i class="glyphicon glyphicon-time"></i></td>
+      <span  data-ng-bind="vm.solicitacao.dataCadastro | date:' HH:mm'"></span>
+
+      <!--  -
+        <span data-ng-if="vm.solicitacao.user"
+              data-ng-bind="vm.solicitacao.user.displayName"></span>
+        <span data-ng-if="!vm.solicitacao.user">Deleted User</span>-->
+    </em>
+  </small>
+  <p></p>
+  <div>
+    <button class="btn btn-info" ng-click="vm.enviarProdutos()">Enviar</button>
+    <button class="btn btn-default" ng-click="vm.voltar()">Voltar</button>
+  </div>
+  <p class="lead" data-ng-bind="vm.cotacao.content"></p>
+</section>

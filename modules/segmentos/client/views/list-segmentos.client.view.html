@@ -1,0 +1,22 @@
+<section>
+  <div class="page-header">
+    <h1>Segmentos</h1>
+  </div>
+  <div class="list-group">
+    <a data-ng-repeat="segmento in vm.segmentos"
+       data-ui-sref="segmentos.view({ segmentoId: segmento._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Criado em
+        <span data-ng-bind="segmento.dataCadastro | date:'mediumDate'"></span>
+        por
+        <span data-ng-if="segmento.user" data-ng-bind="segmento.user.displayName"></span>
+        <span data-ng-if="!segmento.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" data-ng-bind="segmento.nome"></h4>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="vm.segmentos.$resolved && !vm.segmentos.length">
+    No Segmentos yet, why don't you <a data-ui-sref="segmentos.create">adicionar um segmento</a>?
+  </div>
+</section>
