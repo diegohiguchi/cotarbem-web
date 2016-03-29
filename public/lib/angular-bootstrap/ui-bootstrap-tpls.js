@@ -3113,7 +3113,7 @@ angular.module('ui.bootstrap.pagination', [])
 })
 
 .directive('pagination', ['$parse', 'paginationConfig', function($parse, paginationConfig) {
-  
+
   return {
     restrict: 'EA',
     scope: {

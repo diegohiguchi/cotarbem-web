@@ -82,6 +82,13 @@ module.exports = {
         user: 'diegohiguchi@gmail.com',
         pass: 'gladiador*30'
       }
+      /* host: 'cotarbem.com.br',
+       port: 2525,
+       secure: true,
+       auth: {
+       user: 'cotarbem@cotarbem.com.br',
+       pass: '1Q2w3e4r'
+       }*/
     }
   },
   seedDB: {
