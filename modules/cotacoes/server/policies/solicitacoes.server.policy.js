@@ -52,7 +52,7 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }]
   }, {
-    roles: ['guest'],
+    roles: ['admin',  'cliente', 'fornecedor'],
     allows: [{
       resources: '/api/solicitacoes',
       permissions: ['get']

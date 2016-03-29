@@ -23,6 +23,9 @@ exports.invokeRolesPolicies = function () {
         }, {
             resources: '/api/cotacoes/obterPorSolicitacaoId/:solicitacaoId',
             permissions: ['*']
+        }, {
+            resources: '/api/cotacoes/fornecedor/:solicitacaoId',
+            permissions: ['*']
         }]
     },{
         roles: ['guest'],
