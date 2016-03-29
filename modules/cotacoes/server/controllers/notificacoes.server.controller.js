@@ -87,8 +87,6 @@ exports.notificarFornecedores = function (req, res, next) {
             });
         }
     ], function (err) {
-
-
         if (err) {
             return next(err);
         }
@@ -116,7 +114,7 @@ exports.notificarCliente = function (req, res, next) {
                 done(err, emailHTML, user);
             });
         },
-        // If valid email, send reset email using service
+
         function (emailHTML, user, done) {
             var mailOptions = {
                 to: user.email,
