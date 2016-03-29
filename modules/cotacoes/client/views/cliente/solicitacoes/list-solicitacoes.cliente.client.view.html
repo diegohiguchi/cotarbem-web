@@ -20,10 +20,10 @@
       <span my-current-time="solicitacao"></span>
     </a>
 
-    <pagination boundary-links="true" max-size="5" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></pagination>
+    <pagination ng-show="vm.pagedItems.length" boundary-links="true" max-size="5" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></pagination>
   </div>
   <div class="alert alert-warning text-center" data-ng-if="vm.solicitacoes.$resolved && !vm.solicitacoes.length">
-    No Solicitacoes yet, why don't you <a data-ui-sref="solicitacoes.create">create one</a>?
+    Não há cotações, <a data-ui-sref="cotacoesCliente.create">criar nova cotação</a>
   </div>
 
 
