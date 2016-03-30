@@ -65,7 +65,7 @@ exports.notificarFornecedores = function (req, res, next) {
             var mailOptions = {
                 to: user.email,
                 from: config.mailer.from,
-                subject: 'Solicitação de nova cotação',
+                subject: 'Solicitação para cotação',
                 html: emailHTML
             };
             smtpTransport.sendMail(mailOptions, function (err) {
@@ -119,7 +119,7 @@ exports.notificarCliente = function (req, res, next) {
             var mailOptions = {
                 to: user.email,
                 from: config.mailer.from,
-                subject: 'Cotações da sua solicitação',
+                subject: 'Cotação encerrada',
                 html: emailHTML
             };
             smtpTransport.sendMail(mailOptions, function (err) {

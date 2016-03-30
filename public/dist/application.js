@@ -877,6 +877,7 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         vm.solicitacao = cotacaoResolve;
         vm.error = null;
         vm.form = {};
+        vm.total = 0;
         vm.remove = remove;
         vm.save = save;
 
@@ -913,6 +914,17 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
             }
         }
 
+        function calcularTotal(produtos){
+            vm.total = 0;
+
+            for(var i = 0; i < produtos.length; i++){
+                var produto = produtos[i];
+                vm.total += (produto.valor * produto.quantidade);
+            }
+
+            vm.total;
+        };
+
         vm.adicionarProduto = function(produto){
             var produtoId = vm.produtosSelecionados.indexOf(produto);
 
@@ -920,8 +932,9 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                 vm.produtosSelecionados.splice(produtoId, 1);
             else
                 vm.produtosSelecionados.push(produto);
-        };
 
+            calcularTotal(vm.produtosSelecionados);
+        };
 
         vm.enviarProdutos = function(){
             if(vm.produtosSelecionados.length <= 0) {
@@ -979,8 +992,6 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
             }).error(function (response) {
                 // Show user error message and clear form
             });
-
-            //listarCotacoes();
         }
 
         init();
