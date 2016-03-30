@@ -22,6 +22,7 @@
         vm.solicitacao = cotacaoResolve;
         vm.error = null;
         vm.form = {};
+        vm.total = 0;
         vm.remove = remove;
         vm.save = save;
 
@@ -58,6 +59,17 @@
             }
         }
 
+        function calcularTotal(produtos){
+            vm.total = 0;
+
+            for(var i = 0; i < produtos.length; i++){
+                var produto = produtos[i];
+                vm.total += (produto.valor * produto.quantidade);
+            }
+
+            vm.total;
+        };
+
         vm.adicionarProduto = function(produto){
             var produtoId = vm.produtosSelecionados.indexOf(produto);
 
@@ -65,6 +77,8 @@
                 vm.produtosSelecionados.splice(produtoId, 1);
             else
                 vm.produtosSelecionados.push(produto);
+
+            calcularTotal(vm.produtosSelecionados);
         };
 
 
