@@ -81,7 +81,6 @@
             calcularTotal(vm.produtosSelecionados);
         };
 
-
         vm.enviarProdutos = function(){
             if(vm.produtosSelecionados.length <= 0) {
                 /* jshint ignore:start */
@@ -138,8 +137,6 @@
             }).error(function (response) {
                 // Show user error message and clear form
             });
-
-            //listarCotacoes();
         }
 
         init();
