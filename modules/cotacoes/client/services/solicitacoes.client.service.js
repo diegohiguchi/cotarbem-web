@@ -20,7 +20,7 @@
 
     angular.module('solicitacoes').factory('SolicitacoesSegmentoService', ['$resource',
         function ($resource) {
-            return $resource('api/solicitacoesPorSubSegmentos', {}, {
+            return $resource('api/solicitacoesPorSubSegmentos', {
             });
         }
     ]);

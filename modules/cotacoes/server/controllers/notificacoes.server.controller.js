@@ -75,8 +75,6 @@ exports.notificarFornecedores = function (req, res, next) {
                     /*res.end({
                      message: 'An email has been sent to the provided email with further instructions.'
                      });*/
-
-
                 } else {
                     return res.status(400).send({
                         message: 'Falhou enviou do email'
@@ -97,15 +95,42 @@ exports.notificarFornecedores = function (req, res, next) {
 
 exports.notificarCliente = function (req, res, next) {
     async.waterfall([
-
         function (done) {
             var solicitacao = req.body;
-            var user = solicitacao.user;
+            var usuario = solicitacao.user;
 
+            if (usuario) {
+
+                var tipoUsuario = _.find(usuario.roles, function(data){
+                    return data === 'cliente';
+                });
+
+                if(!_.isEmpty(tipoUsuario)){
+                    User.findOne({
+                        _id: usuario._id
+                    }, function (err, user) {
+                        if (!user) {
+                            return res.status(400).send({
+                                message: 'No account with that username has been found'
+                            });
+                        } else {
+                            done(err, user, solicitacao);
+                        }
+                    });
+                }
+
+            } else {
+                return res.status(400).send({
+                    message: 'Username field must not be blank'
+                });
+            }
+        },
+        function (user, solicitacao, done) {
             var httpTransport = 'http://';
             if (config.secure && config.secure.ssl === true) {
                 httpTransport = 'https://';
             }
+
             res.render(path.resolve('modules/cotacoes/server/templates/cotacoes'), {
                 name: user.displayName,
                 appName: config.app.title,
@@ -167,7 +192,7 @@ exports.notificarFornecedoresProdutos = function (req, res, next) {
                 '            <th>Data de Entrega</th>' +
                 '            <th>Valor</th>' +
                 '            <th>Valor Total</th>' +
-                '            </tr>' +
+                '               </tr>' +
                 '            </thead><tbody>';
 
             for (var j = 0; j < produtosSelecionados.length; j++) {

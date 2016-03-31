@@ -4,7 +4,8 @@
     var app = angular.module('cotacoes');
 
     app.directive('myCurrentTime', ['$interval', 'dateFilter', 'SolicitacoesService', 'notificacoesApiService',
-        function ($interval, dateFilter, SolicitacoesService, notificacoesApiService) {
+            'Socket', 'Authentication',
+        function ($interval, dateFilter, SolicitacoesService, notificacoesApiService, Socket, Authentication) {
             // return the directive link function. (compile function not needed)
             return function (scope, element, attrs) {
                 var format = 'mm:ss a',  // date format
@@ -21,7 +22,7 @@
                     var diferencaData = moment.utc(moment(novaData, "DD/MM/YYYY  HH:mm:ss").diff(moment(dataSolicitacao, "DD/MM/YYYY  HH:mm:ss"))).format("HH:mm:ss");
                     var tempoEmSegundos = moment.duration(diferencaData).asSeconds();
 
-                    if (tempoEmSegundos <= 600) {
+                    if (tempoEmSegundos <= 10) {
                         var intervaloData = moment.utc(moment(dataSolicitacao, "DD/MM/YYYY  HH:mm:ss").diff(moment(novaData, "DD/MM/YYYY HH:mm:ss"))).local().format("HH:mm:ss");
                         contador = moment.utc(moment(intervaloData, "HH:mm:ss").diff(moment("23:50:00", "HH:mm:ss"))).format("mm:ss");
                         /*
@@ -33,22 +34,32 @@
 
                     } else if (solicitacao.ativo) {
 
-                        SolicitacoesService.get({
-                            solicitacaoId: solicitacao._id
-                        }).$promise.then(function(response){
-                            $interval.cancel(stopTime);
-                            solicitacao = response;
-                            solicitacao.ativo = false;
-                            solicitacao.$update();
+                        /*var usuario = Authentication.user;
 
-                            var solicitacao = {
-                                _id: solicitacao._id,
-                                user: user
-                            };
-
-                            notificacoesApiService.notificarCliente(solicitacao).success(function(response){
-                            });
+                        var tipoUsuario = _.find(usuario.roles, function(data){
+                            return data === 'fornecedor';
                         });
+
+                        if(!_.isEmpty(tipoUsuario)) {*/
+                            SolicitacoesService.get({
+                                solicitacaoId: solicitacao._id
+                            }).$promise.then(function (response) {
+                                $interval.cancel(stopTime);
+                                solicitacao = response;
+                                solicitacao.ativo = false;
+                                solicitacao.$update();
+
+                                var solicitacaoEncerrada = {
+                                    _id: solicitacao._id,
+                                    user: user
+                                };
+
+                                notificacoesApiService.notificarCliente(solicitacaoEncerrada).success(function (response) {
+                                });
+
+                                Socket.emit('cotacao-encerrada', solicitacao);
+                            });
+                       /* }*/
 
                         /*services.solicitacaoServices.editar(solicitacao).success(function (response) {
                          $interval.cancel(stopTime);

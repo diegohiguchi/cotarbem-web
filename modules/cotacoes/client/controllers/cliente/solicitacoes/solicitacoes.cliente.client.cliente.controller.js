@@ -7,10 +7,10 @@
         .controller('SolicitacoesController', SolicitacoesController);
 
     SolicitacoesController.$inject = ['$scope', '$state', 'Authentication', 'cotacaoResolve', 'SegmentosService',
-        'SubsegmentosService', 'notificacoesApiService'];
+        'SubsegmentosService', 'notificacoesApiService', 'Socket'];
 
     function SolicitacoesController ($scope, $state, Authentication, solicitacoes, SegmentosService, SubsegmentosService,
-        notificacoesApiService) {
+        notificacoesApiService, Socket) {
 
         var vm = this;
 
@@ -114,6 +114,8 @@
                     _id: res._id,
                     subSegmento: res.subSegmento
                 };
+
+                Socket.emit('nova-solicitacao', res);
 
                 notificacoesApiService.notificarFornecedores(solicitacao).success(function(response){
                     /* jshint ignore:start */

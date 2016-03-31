@@ -5,15 +5,18 @@
         .module('cotacoes')
         .controller('CotacoesFornecedorListController', CotacoesFornecedorListController);
 
-    CotacoesFornecedorListController.$inject = ['SolicitacoesSegmentoService', '$filter'];
+    CotacoesFornecedorListController.$inject = ['SolicitacoesSegmentoService', '$filter', 'Socket', 'Authentication'];
 
-    function CotacoesFornecedorListController(SolicitacoesSegmentoService, $filter) {
+    function CotacoesFornecedorListController(SolicitacoesSegmentoService, $filter, Socket, Authentication) {
         var vm = this;
+        vm.authentication = Authentication;
 
-        SolicitacoesSegmentoService.query(function (data) {
-            vm.solicitacoes = data;
-            vm.buildPager();
-        });
+        function carregarSolicitacoes() {
+            SolicitacoesSegmentoService.query(function (data) {
+                vm.solicitacoes = data;
+                vm.buildPager();
+            });
+        }
 
         vm.buildPager = function () {
             vm.pagedItems = [];
@@ -35,6 +38,24 @@
         vm.pageChanged = function () {
             vm.figureOutItemsToDisplay();
         };
+
+        Socket.on('envia-solicitacao', function () {
+            carregarSolicitacoes();
+        });
+
+        Socket.on('envia-cotacao-encerrada', function(data){
+            carregarSolicitacoes();
+        });
+
+        function init(){
+            carregarSolicitacoes();
+
+            vm.authentication.user.subSegmentos.forEach(function(subSegmento){
+                Socket.emit('carrega-subSegmentos', subSegmento);
+            });
+        }
+
+        init();
     }
 })();
 
