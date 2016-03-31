@@ -4,7 +4,7 @@
     var app = angular.module('cotacoes');
 
     app.directive('myCurrentTime', ['$interval', 'dateFilter', 'SolicitacoesService', 'notificacoesApiService',
-            'Socket', 'Authentication',
+        'Socket', 'Authentication',
         function ($interval, dateFilter, SolicitacoesService, notificacoesApiService, Socket, Authentication) {
             // return the directive link function. (compile function not needed)
             return function (scope, element, attrs) {
@@ -34,32 +34,24 @@
 
                     } else if (solicitacao.ativo) {
 
-                        /*var usuario = Authentication.user;
+                        SolicitacoesService.get({
+                            solicitacaoId: solicitacao._id
+                        }).$promise.then(function (response) {
+                            $interval.cancel(stopTime);
+                            solicitacao = response;
+                            solicitacao.ativo = false;
+                            solicitacao.$update();
 
-                        var tipoUsuario = _.find(usuario.roles, function(data){
-                            return data === 'fornecedor';
-                        });
+                            var solicitacaoEncerrada = {
+                                _id: solicitacao._id,
+                                user: user
+                            };
 
-                        if(!_.isEmpty(tipoUsuario)) {*/
-                            SolicitacoesService.get({
-                                solicitacaoId: solicitacao._id
-                            }).$promise.then(function (response) {
-                                $interval.cancel(stopTime);
-                                solicitacao = response;
-                                solicitacao.ativo = false;
-                                solicitacao.$update();
-
-                                var solicitacaoEncerrada = {
-                                    _id: solicitacao._id,
-                                    user: user
-                                };
-
-                                notificacoesApiService.notificarCliente(solicitacaoEncerrada).success(function (response) {
-                                });
-
-                                Socket.emit('cotacao-encerrada', solicitacao);
+                            notificacoesApiService.notificarCliente(solicitacaoEncerrada).success(function (response) {
                             });
-                       /* }*/
+
+                            Socket.emit('cotacao-encerrada', solicitacao);
+                        });
 
                         /*services.solicitacaoServices.editar(solicitacao).success(function (response) {
                          $interval.cancel(stopTime);
