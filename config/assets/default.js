@@ -7,7 +7,10 @@ module.exports = {
         'public/lib/bootstrap/dist/css/bootstrap.css',
         'public/lib/bootstrap/dist/css/bootstrap-theme.css',
         'public/lib/toastr/toastr.min.css',
-        'public/lib/angular-loading-bar/src/loading-bar.css'
+        'public/lib/angular-loading-bar/src/loading-bar.css',
+        'public/lib/theme/css/custom.css',
+        'public/lib/theme/css/revslider.css',
+        'public/lib/theme/css/theme.css'
       ],
       js: [
         'public/lib/angular/angular.js',
