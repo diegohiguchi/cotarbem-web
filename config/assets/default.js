@@ -31,16 +31,16 @@ module.exports = {
         'public/lib/angular-locale/angular-locale_pt-br.js',
         'public/lib/moment/moment.js',
         'public/lib/angular-loading-bar/src/loading-bar.js',
+        'public/lib/theme/jquery-ui.min.js',
         'public/lib/theme/bootstrap.min.js',
-        'public/lib/theme/jquery.flexslider-min.js',
-        'public/lib/theme/jquery.isotope.min.js',
+        'public/lib/theme/modules.js',
+        'public/lib/theme/theme.js',
         'public/lib/theme/jquery.themepunch.plugins.min.js',
         'public/lib/theme/jquery.themepunch.revolution.min.js',
-        'public/lib/theme/jquery-ui.min.js',
-        'public/lib/theme/modules.js',
-        'public/lib/theme/slick.js',
+        'public/lib/theme/jquery.flexslider-min.js',
+        'public/lib/theme/jquery.isotope.min.js',
         'public/lib/theme/sorting.js',
-        'public/lib/theme/theme.js'
+        'public/lib/theme/slick.js'
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },
