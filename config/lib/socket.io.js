@@ -162,9 +162,8 @@ module.exports = function (app, db) {
 
 
             if(!_.isEmpty(usuario)) {
-                io.to(usuario.socketId).emit('envia-cotacao-encerrada', mensagem);
-
                 io.in(solicitacao.subSegmento._id).emit('envia-cotacao-encerrada', mensagem);
+                io.to(usuario.socketId).emit('envia-cotacao-encerrada', mensagem);
             }
             /*else {
              io.in(solicitacao.subSegmento).emit('envia-cotacao-encerrada', criarMensagem);

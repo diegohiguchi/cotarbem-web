@@ -1,84 +1,836 @@
-<section ng-controller="HomeController">
-  <!--<div class="jumbotron text-center">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-        <img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/client/img/brand/logo.png" />
+<section ng-controller="HomeController" class="home">
+  <div id="home" class="main_header type2">
+    <div class="header_parent_wrap">
+      <header>
+        <div class="container">
+          <div class="logo_sect">
+            <a href="index.html" class="logo"><img src="modules/core/client/img/slider/logo2.jpg" class="logo_def" alt=""/>
+              <!-- <img src="modules/core/client/img/slider/logo1.jpg" class="logo_retina" alt="" />-->
+            </a>
+          </div>
+          <nav>
+            <ul class="menu">
+              <li class="menu-item-has-children"><a href="#home" class="scroll">HOME</a></li>
+              <li class="menu-item-has-children"><a href="#sobre" class="scroll">SOBRE</a></li>
+              <!-- <li class="menu-item-has-children"><a href="#servicos">SERVIÇOS</a></li> -->
+              <li class="menu-item-has-children"><a href="#planos" class="scroll">PLANOS</a></li>
+              <li class="menu-item-has-children"><a href="#aplicativo" class="scroll">APLICATIVO</a></li>
+              <li class="menu-item-has-children"><a href="#contato" class="scroll">CONTATO</a></li>
+            </ul>
+          </nav>
+          <div class="head_search">
+            <form action="javascript:void(0);" method="post" name="search_form">
+              <input type="text" value="" name="s" placeholder="Search">
+              <input type="submit" value="Search">
+            </form>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </header>
+    </div>
+  </div>
+  <!--<div class="wrapper">-->
+    <div class="container">
+      <div class="content_block row no-sidebar">
+        <div class="fl-container">
+          <div class="posts-block">
+            <div class="contentarea">
+              <div style="text-align: center">
+                <img src="modules/core/client/img/slider/pratico.png" alt=""/>
+              </div>
+              <!-- Slider -->
+              <!--<div class="fw_block bg_start wall_wrap">
+                <div class="row">
+                  <div class="col-sm-12 first-module module_slider module_cont pb0 light_parent">
+                    <div class="slider_container">
+                      <div class="fullscreen_slider">
+                        <ul>
+
+                          &lt;!&ndash; SLIDE 1 &ndash;&gt;
+                          <li data-transition="fade" data-slotamount="5" data-masterspeed="700" >
+                            <img src="modules/core/client/img/slider/slide_bg_light.jpg" alt="slide2" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" />
+                            &lt;!&ndash; LAYER NR. 1 &ndash;&gt;
+                            <div class="tp-caption lfb ltb tp-resizeme slide_img slide3_1"
+                                 data-x="0"
+                                 data-y="7"
+                                 data-speed="800"
+                                 data-start="700"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="500"
+                                 data-endeasing="Power4.easeIn"><img src="modules/core/client/img/slider/3_1_light.png" alt=""/>
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 2 &ndash;&gt;
+                           &lt;!&ndash; <div class="tp-caption lfb ltb tp-resizeme slide_img slide3_2"
+                                 data-x="0"
+                                 data-y="324"
+                                 data-speed="1000"
+                                 data-start="1200"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="500"
+                                 data-endeasing="Power4.easeIn"><img src="modules/core/client/img/slider/3_2_light.png" alt=""/>
+                            </div>&ndash;&gt;
+
+                            &lt;!&ndash; LAYER NR. 3 &ndash;&gt;
+                            <div class="tp-caption lft ltt tp-resizeme slide_title slide_info_center"
+                                 data-x="0"
+                                 data-y="223"
+                                 data-speed="600"
+                                 data-start="1200"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="300"
+                                 data-endeasing="Power4.easeIn">Bem Vindo ao <span>Cotar Bem!</span>
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 4 &ndash;&gt;
+                            <div class="tp-caption lfb ltb tp-resizeme slide_descr slide_info_center"
+                                 data-x="0"
+                                 data-y="311"
+                                 data-speed="600"
+                                 data-start="1200"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="600"
+                                 data-endeasing="Power4.easeIn">Um sistema que ajudará sua empresa a render<br> muito mais, poupando tempo e dinheiro ao fazer cotações.<br> O cotar bem vai mudar a forma que você conhece de cotação e orçamento!
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 5 &ndash;&gt;
+                            <div class="tp-caption lfb ltb tp-resizeme slide_btn slide_info_center"
+                                 data-x="0"
+                                 data-y="424"
+                                 data-speed="800"
+                                 data-start="1400"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="600"
+                                 data-endeasing="Power4.easeIn"><a href="cadastro.html">Comece Agora</a>
+                            </div>
+                          </li>
+
+                          &lt;!&ndash; SLIDE 2 &ndash;&gt;
+                          <li data-transition="fade" data-slotamount="5" data-masterspeed="700" >
+                            <img src="modules/core/client/img/slider/slide_bg_light.jpg" alt="slide1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" />
+                            &lt;!&ndash; LAYER NR. 1 &ndash;&gt;
+                            <div class="tp-caption customin z_index2"
+                                 data-x="665"
+                                 data-y="-50"
+                                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:1000;transformOrigin:50% 50%;"
+                                 data-speed="1500"
+                                 data-start="500"
+                                 data-easing="Power3.easeInOut"
+                                 data-endspeed="300"><img src="modules/core/client/img/slider/desktop.png" alt=""/>
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 2 &ndash;&gt;
+                            &lt;!&ndash;<div class="tp-caption lfb ltb tp-resizeme slide_img z_index3"
+                                 data-x="699"
+                                 data-y="672"
+                                 data-speed="1400"
+                                 data-start="1300"
+                                 data-easing="Back.easeInOut"
+                                 data-endspeed="1000"
+                                 data-endeasing="Power4.easeIn"><img src="modules/core/client/img/slider/keyboard.png" alt=""/>
+                            </div>&ndash;&gt;
+
+                            &lt;!&ndash; LAYER NR. 3 &ndash;&gt;
+                            &lt;!&ndash;<div class="tp-caption lfb ltb tp-resizeme slide_img z_index4"
+                                 data-x="1068"
+                                 data-y="679"
+                                 data-speed="1500"
+                                 data-start="1500"
+                                 data-easing="Back.easeInOut"
+                                 data-endspeed="500"
+                                 data-endeasing="Power4.easeIn"><img src="modules/core/client/img/slider/mouse.png" alt=""/>
+                            </div>&ndash;&gt;
+
+                            &lt;!&ndash; LAYER NR. 4 &ndash;&gt;
+                            <div class="tp-caption lfr ltr tp-resizeme slide_img z_index5"
+                                 data-x="1264"
+                                 data-y="369"
+                                 data-speed="1200"
+                                 data-start="2300"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="500"
+                                 data-endeasing="Power4.easeIn"><img src="modules/core/client/img/slider/ipad.png" alt=""/>
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 5 &ndash;&gt;
+                            <div class="tp-caption lfb ltb tp-resizeme slide_img z_index6"
+                                 data-x="1248"
+                                 data-y="528"
+                                 data-speed="1200"
+                                 data-start="2300"
+                                 data-easing="Back.easeInOut"
+                                 data-endspeed="500"
+                                 data-endeasing="Power4.easeIn"><img src="modules/core/client/img/slider/iphone.png" alt=""/>
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 6 &ndash;&gt;
+                            <div class="tp-caption lft ltt tp-resizeme slide_title font_size60"
+                                 data-x="0"
+                                 data-y="190"
+                                 data-speed="1000"
+                                 data-start="1600"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="300"
+                                 data-endeasing="Power4.easeIn">Uma Solução <span>inteligente</span><br> para seu negócio.
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 7 &ndash;&gt;
+                            <div class="tp-caption lfb ltb tp-resizeme slide_descr"
+                                 data-x="0"
+                                 data-y="346"
+                                 data-speed="1000"
+                                 data-start="1600"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="600"
+                                 data-endeasing="Power4.easeIn">Possuir o aplicativo <span>Cotar Bem</span> no seu négocio é garantir a agilidade<br> certa para realizar as cotações que sua empresa necessita.<br>
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 8 &ndash;&gt;
+                            <div class="tp-caption lfb ltb tp-resizeme slide_btn"
+                                 data-x="0"
+                                 data-y="424"
+                                 data-speed="1000"
+                                 data-start="1800"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="600"
+                                 data-endeasing="Power4.easeIn"><a href="cadastro.html">Comece Agora</a>
+                            </div>
+                          </li>
+
+                          &lt;!&ndash; SLIDE 3 &ndash;&gt;
+                          <li data-transition="fade" data-slotamount="5" data-masterspeed="700" >
+                            <img src="modules/core/client/img/slider/slide_bg_light.jpg" alt="slide3" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" />
+                            &lt;!&ndash; LAYER NR. 1 &ndash;&gt;
+                            <div class="tp-caption customin z_index2"
+                                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:1000;transformOrigin:50% 50%;"
+                                 data-x="691"
+                                 data-y="114"
+                                 data-speed="1500"
+                                 data-start="1000"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="500"
+                                 data-endeasing="Power4.easeIn"><img src="modules/core/client/img/slider/laptop.png" alt=""/>
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 2 &ndash;&gt;
+                            <div class="tp-caption lft ltt tp-resizeme slide_title font_size60"
+                                 data-x="0"
+                                 data-y="190"
+                                 data-speed="600"
+                                 data-start="1200"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="300"
+                                 data-endeasing="Power4.easeIn">Sistema de <span>cotação</span><br> simples e detalhado
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 3 &ndash;&gt;
+                            <div class="tp-caption lfb ltb tp-resizeme slide_descr"
+                                 data-x="0"
+                                 data-y="346"
+                                 data-speed="600"
+                                 data-start="1200"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="600"
+                                 data-endeasing="Power4.easeIn">Com o cotar bem não é necessario ter o trabalho de ficar cadastrando um mundo<br> de produtos, fornecedores e grupos. O sistema já lhe entrega tudo pronto.
+                            </div>
+
+                            &lt;!&ndash; LAYER NR. 4 &ndash;&gt;
+                            <div class="tp-caption lfb ltb tp-resizeme slide_btn"
+                                 data-x="0"
+                                 data-y="429"
+                                 data-speed="800"
+                                 data-start="1400"
+                                 data-easing="Power4.easeOut"
+                                 data-endspeed="600"
+                                 data-endeasing="Power4.easeIn"><a href="cadastro.html">Comece Agora</a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>-->
+              <!-- //Slider -->
+
+              <div class="fw_block bg_start grey_bg pt15">
+                <div class="row">
+                  <div class="col-sm-12 module_cont text-center pb25">
+                    <div class="shortcode_promoblock">
+                      <div class="promoblock_wrapper">
+                        <div class="promo_text_block">
+                          <div class="promo_text_block_wrapper">
+                            <h2 class="promo_text_main_title mb13">Não perca tempo, agilize agora mesmo as cotações de sua empresa!</h2>
+                            <h6 class="promo_text_additional_title mb22">Economize trabalho, tempo e dinheiro como nosso sistema!</h6>
+                          </div>
+                        </div>
+                        <div class="promo_button_block"><a class="shortcode_button btn_normal btn_type6" href="cadastro.html">Cadastre-se</a></div>
+                        <div class="clear"></div>
+                      </div>
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div id="sobre" class="row">
+                <div class="col-sm-12 module_cont pb20">
+                  <div class="bg_title">
+                    <h2>Porque com o Cotar Bem tudo fica mais fácil ?</h2>
+                  </div>
+                  <div class="module_descr">
+                    <p>O cotar bem veio para facilitar a vida dos fornecedores e dos microeemprendedores, uma vez que eles tenham acesso a ferramenta, fazer as cotações para seus produtos nunca ficará tão fácil. </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 module_cont pb40 module_tabs">
+                  <div class="shortcode_tabs type3">
+                    <div class="all_head_sizer"><div class="all_heads_cont"></div><div class="clear"></div></div>
+                    <div class="all_body_sizer"><div class="all_body_cont"></div></div>
+                    <div class="shortcode_tab_item_title expand_yes">PRATICIDADE</div>
+                    <div class="shortcode_tab_item_body tab-content clearfix">
+                      <div class="ip">
+                        <div class="tab_content">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <p>
+                                O cotar bem é de fato o sistema mais simples e sofisticado de cotação que existe, e isso é fato. O usuário não necessita cadastrar seus produtos, fornecedores, grupos e tipos de produtos, porque isso já vai ser entregue tudo pronto pelo sistema. Algo diferente disso e o aplicativo já deixaria de ter o propósito em que foi projetado que é facilitar a vida das pessoas que o usam tanto para fornecer quanto obter produtos. Melhor ainda é que o cotar bem, além de você poder usa-lo pelo computador ou notebook, poderá ter também o aplicativo com as mesmas funções para iPhone, smartphone android, tablet, iPad, etc. Então é claro que o cotar bem é tudo que você precisa para fazer sua empresa render mais que 80% do atual.</p>
+                            </div>
+                            <div class="col-sm-6"><img src="modules/core/client/img/slider/bg02.png" class="mb17" alt="" /></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shortcode_tab_item_title expand_no">AGILIDADE</div>
+                    <div class="shortcode_tab_item_body tab-content clearfix">
+                      <div class="ip">
+                        <div class="tab_content">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <p>O cotar bem por si mesmo já é uma maneira bem interessante de cotar seus produtos, imagina poder fazer isso da rua ? Hoje nada pode ficar parado, e por isso sempre estamos ocupados com diversas coisas. Por isso o Cotar Bem possui também um aplicativo celular, para você ter a comodidade de fazer isso na hora em que estiver longe do seu notebook ou computador, na fila de uma banco aguardando sua senha. </p>
+                            </div>
+                            <div class="col-sm-6"><img src="modules/core/client/img/slider/bg03.png" class="mb17" alt="" /></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shortcode_tab_item_title expand_no">AUMENTO NAS VENDAS</div>
+                    <div class="shortcode_tab_item_body tab-content clearfix">
+                      <div class="ip">
+                        <div class="tab_content">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <p>Depois que analisamos tudo isso, não concorda que você fará isso poupando muito tempo, trabalho e dinheiro ? Cotando com o Cotar Bem você sempre vai adquirir seus produtos pelos melhores preços e melhor, vai vender muito mais também. Isso é ótimo não é ? Calculamos que usando o cotar bem você pode vender até 80% mais. </p>
+                            </div>
+                            <div class="col-sm-6"><img src="modules/core/client/img/slider/bg04.png" class="mb17" alt="" /></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="fw_block bg_start pt90 bg4 paralax mb90">
+                <div class="row">
+                  <div class="col-sm-6 module_cont pb30">
+                    <img src="modules/core/client/img/slider/pratico.png" alt="" />
+                  </div>
+                  <div class="col-sm-6 module_cont pb80">
+                    <div class="bg_title">
+                      <h2 class="light text-left">Super Prático</h2>
+                    </div>
+                    <p class="light mb28">Com o Cotar Bem você não precisa reservar o dia para ficar na rua ou dentro de casa realizando suas cotações. É simples basta inserir os produtos que deseja cotar que as ofertas chegam até você.</p>
+                    <ul class="list_icons light">
+                      <li><i class="icon-check"></i> Sistema simples e eficiente. </li>
+                      <li><i class="icon-star"></i> Compatível com desktop, android, apple e mac.</li>
+                    </ul>
+                    <p class="light mb28"> Com o nosso sistema você pode fazer isso em qualquer lugar, e com muita praticidade, economizando tempo, dinheiro e dor de cabeça. Cotar Bem veio para ajudar você a cuidar melhor do seu negócio.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 module_cont pb5">
+                  <div class="bg_title">
+                    <h2>O que exite de novo no Cotar Bem ?</h2>
+                  </div>
+                  <div class="module_descr">
+                    <p>O Cotar Bem esta em constante melhoramento para que você possa ter o melhor sistema de cotação na palma de sua mão.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fw_block bg_start grey_bg pt95">
+                <div class="row">
+                  <div class="col-sm-4 module_cont module_timeline pb80">
+                    <div class="bg_title">
+                      <h3 class="large">Atualizações</h3>
+                    </div>
+                    <div class="module_content shortcode_timeline">
+                      <ul>
+                        <li>
+                          <div class="shortcode_timeline_date">
+                            <span>20.03</span>2016
+                          </div>
+                          <h6><a href="javascript:void(0);">Implantação de sistema Desktop.</a></h6>
+                          <div class="timeline_meta">by <a href="javascript:void(0);">Up Soluções Web</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="javascript:void(0);">2 comments</div>
+                        </li>
+                        <li>
+                          <div class="shortcode_timeline_date">
+                            <span>10.02</span>2016
+                          </div>
+                          <h6><a href="javascript:void(0);">Melhorias e otimização gráfica.</a></h6>
+                          <div class="timeline_meta">by <a href="javascript:void(0);">Up Soluções Web</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="javascript:void(0);">2 comments</a></div>
+                        </li>
+                        <li>
+                          <div class="shortcode_timeline_date">
+                            <span>05.01</span>2016
+                          </div>
+                          <h6><a href="javascript:void(0);">Correção de Bugs</a></h6>
+                          <div class="timeline_meta">by <a href="javascript:void(0);">Up Soluções Web</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="javascript:void(0);">2 comments</a></div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-sm-8 module_cont module_tabs pb80">
+                    <div class="bg_title">
+                      <h3 class="large">Princípios Fundamentais</h3>
+                    </div>
+                    <div class="shortcode_tabs type1 white_bg">
+                      <div class="all_head_sizer"><div class="all_heads_cont"></div><div class="clear"></div></div>
+                      <div class="all_body_sizer"><div class="all_body_cont"></div></div>
+                      <div class="shortcode_tab_item_title expand_yes">Negócio</div>
+                      <div class="shortcode_tab_item_body tab-content clearfix">
+                        <div class="ip">
+                          <div class="tab_content">
+                            <div class="item_tab">
+                              <p>O cotar bem foi projetado pensando não só no fornecedor mais também no microempreendedor, nosso sitemas benefia os dois lados igualmente. Um fornecedor pode facilmente aumentar muito suas vendas e conquistando muito mais clientes fazendo sua margem de lucro subir inacreditavelmente. O microemprendedor sempre vai possuir as melhores ofertas para seus produtos sem trabalho nenhum. Além de uma plataforma no seu desktop, poderá também fazer isso de qualquer lugar usando nosso aplicativo mobile. </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="shortcode_tab_item_title expand_no">Visão</div>
+                        <div class="shortcode_tab_item_body tab-content clearfix">
+                          <div class="ip">
+                            <div class="tab_content">
+                              <p>Tendo em mente o ótimo trabalho que foi desenvolvido com Cotar Bem, queremos que ele seja usado em praticamente todos os estabelecimentos do Brasil.</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="aplicativo" class="fw_block bg_start pt90 bg6 paralax mb90">
+                  <div class="row">
+                    <div class="col-sm-6 module_cont module_iconboxes fleft light pb65">
+                      <div class="bg_title">
+                        <h2 class="light text-left mb37">Cotar Bem no seu bolso</h2>
+                      </div>
+                      <div class="module_content shortcode_iconbox type5">
+                        <a href="javascript:void(0);">
+                          <div class="iconbox_wrapper">
+                            <div class="icon_title_wrap">
+                              <div class="ico"><img src="modules/core/client/img/icons/icon34.png" class="icon_def" width="70" height="70" alt="" /><img src="modules/core/client/img/retina/icons/icon34.png" class="icon_retina" width="70" height="70" alt="" /></div>
+                              <h5 class="iconbox_title">Fácil Instalação</h5>
+                            </div>
+                            <div class="iconbox_body">
+                              <p>O aplicativo é compatível com Android e Iphone, sendo assim fácil instalação pela Play Store e Itunes encontrada em seu dispositivo.</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="module_content shortcode_iconbox type5">
+                        <a href="javascript:void(0);">
+                          <div class="iconbox_wrapper">
+                            <div class="icon_title_wrap">
+                              <div class="ico"><img src="modules/core/client/img/icons/icon35.png" class="icon_def" width="70" height="70" alt="" /><img src="modules/core/client/img/retina/icons/icon35.png" class="icon_retina" width="70" height="70" alt="" /></div>
+                              <h5 class="iconbox_title">Suporte</h5>
+                            </div>
+                            <div class="iconbox_body">
+                              <p>Suporte disponivel também pelo celular, caso tenha algo a dizer ou algo de errado, basta pegar o celular e nos informar seja onde for.</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="module_content shortcode_iconbox type5">
+                        <a href="javascript:void(0);">
+                          <div class="iconbox_wrapper">
+                            <div class="icon_title_wrap">
+                              <div class="ico"><img src="modules/core/client/img/icons/icon36.png" class="icon_def" width="70" height="70" alt="" /><img src="modules/core/client/img/retina/icons/icon36.png" class="icon_retina" width="70" height="70" alt="" /></div>
+                              <h5 class="iconbox_title">Cotação</h5>
+                            </div>
+                            <div class="iconbox_body">
+                              <p>Realize todas as suas cotações normalmente como se estivesse em frente no computador, a diferença é que você pode levar seu celular pra onde você for.</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="module_content shortcode_iconbox type5">
+                        <a href="javascript:void(0);">
+                          <div class="iconbox_wrapper">
+                            <div class="icon_title_wrap">
+                              <div class="ico"><img src="modules/core/client/img/icons/icon37.png" class="icon_def" width="70" height="70" alt="" /><img src="modules/core/client/img/retina/icons/icon37.png" class="icon_retina" width="70" height="70" alt="" /></div>
+                              <h5 class="iconbox_title">Alertas e Notificação</h5>
+                            </div>
+                            <div class="iconbox_body">
+                              <p>Receba em seu celular todas as notificações e alertas de sua cotações finalizadas ou respondidas.</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 module_cont pb30">
+                      <img src="modules/core/client/img/slider/aplicativo.png" alt="" />
+                    </div>
+                  </div>
+                </div>
+
+                <div id="planos" class="fw_block bg_start bg5 paralax pt90 mb90">
+                  <div class="row">
+                    <div class="col-sm-12 module_cont pb5">
+                      <div class="bg_title">
+                        <h2 class="light">PLANOS ACESSÍVEIS</h2>
+                      </div>
+                      <div class="module_descr">
+                        <!-- <p class="light">DESCRIÇÃO DOS PLANOS</p> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 module_cont pb95 module_price_table items4">
+                      <div class="price_table_wrapper">
+                        <div class="price_item">
+                          <div class="price_item_wrapper">
+                            <div class="price_item_wrap">
+                              <div class="price_item_title"><h5>Mensal</h5></div>
+                              <div class="item_cost_wrapper">
+                                <div class="price_item_cost">
+                                  <h1><span>R$</span>00.00</h1>
+                                  <h4>/Mensal</h4>
+                                </div>
+                              </div>
+                              <div class="price_item_body">
+                                <div class="price_item_text">Consectetur adipiscing elit</div>
+                                <div class="price_item_text">Sed do eiusmod tempor</div>
+                                <div class="price_item_text">Incididunt ut labore et dolore</div>
+                                <div class="price_item_text">Magna aliqua minim</div>
+                                <div class="price_item_text">Eiusmod tempor incididun</div>
+                                <div class="price_item_text">Neque porro quisquam est</div>
+                                <div class="price_item_text">Temporibus autem quibusdam</div>
+                                <div class="price_item_btn"><a class="shortcode_button btn_normal btn_type4 dark_parent" href="cadastro.html">Aderir plano</a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="price_item most_popular">
+                          <div class="price_item_wrapper">
+                            <div class="price_item_wrap">
+                              <div class="price_item_title"><h5>Trimestral</h5></div>
+                              <div class="item_cost_wrapper">
+                                <div class="price_item_cost">
+                                  <h1><span>R$</span>00.00</h1>
+                                  <h4>/Trimestre</h4>
+                                </div>
+                              </div>
+                              <div class="price_item_body">
+                                <div class="price_item_text">Consectetur adipiscing elit</div>
+                                <div class="price_item_text">Sed do eiusmod tempor</div>
+                                <div class="price_item_text">Incididunt ut labore et dolore</div>
+                                <div class="price_item_text">Magna aliqua minim</div>
+                                <div class="price_item_text">Eiusmod tempor incididun</div>
+                                <div class="price_item_text">Neque porro quisquam est</div>
+                                <div class="price_item_text">Temporibus autem quibusdam</div>
+                                <div class="price_item_btn"><a class="shortcode_button btn_normal btn_type5" href="cadastro.html">Aderir plano</a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="price_item">
+                          <div class="price_item_wrapper">
+                            <div class="price_item_wrap">
+                              <div class="price_item_title"><h5>Semestral</h5></div>
+                              <div class="item_cost_wrapper">
+                                <div class="price_item_cost">
+                                  <h1><span>R$</span>00.00</h1>
+                                  <h4>/Semestre</h4>
+                                </div>
+                              </div>
+                              <div class="price_item_body">
+                                <div class="price_item_text">Consectetur adipiscing elit</div>
+                                <div class="price_item_text">Sed do eiusmod tempor</div>
+                                <div class="price_item_text">Incididunt ut labore et dolore</div>
+                                <div class="price_item_text">Magna aliqua minim</div>
+                                <div class="price_item_text">Eiusmod tempor incididun</div>
+                                <div class="price_item_text">Neque porro quisquam est</div>
+                                <div class="price_item_text">Temporibus autem quibusdam</div>
+                                <div class="price_item_btn"><a class="shortcode_button btn_normal btn_type4 dark_parent" href="cadastro.html">Aderir plano</a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="price_item">
+                          <div class="price_item_wrapper">
+                            <div class="price_item_wrap">
+                              <div class="price_item_title"><h5>Anual</h5></div>
+                              <div class="item_cost_wrapper">
+                                <div class="price_item_cost">
+                                  <h1><span>R$</span>00.00</h1>
+                                  <h4>/Ano</h4>
+                                </div>
+                              </div>
+                              <div class="price_item_body">
+                                <div class="price_item_text">Consectetur adipiscing elit</div>
+                                <div class="price_item_text">Sed do eiusmod tempor</div>
+                                <div class="price_item_text">Incididunt ut labore et dolore</div>
+                                <div class="price_item_text">Magna aliqua minim</div>
+                                <div class="price_item_text">Eiusmod tempor incididun</div>
+                                <div class="price_item_text">Neque porro quisquam est</div>
+                                <div class="price_item_text">Temporibus autem quibusdam</div>
+                                <div class="price_item_btn"><a class="shortcode_button btn_normal btn_type4 dark_parent" href="cadastro.html">Aderir plano</a></div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!--</div>-->
+    <div id="contato" class="wrapper">
+      <div class="container">
+        <div class="page_title_block">
+          <div class="bg_title">
+            <h2>Nós queremos ouvir de você!</h2>
+          </div>
+          <div class="page_descr">
+            <!-- <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo dolores eos qui ratione voluptatem sequi nesciunt.</p> -->
+          </div>
+        </div>
+        <div class="content_block row no-sidebar">
+          <div class="fl-container">
+            <div class="posts-block">
+              <div class="contentarea">
+                <div class="row">
+                  <div class="col-sm-9 module_cont pb40">
+                    <div class="bg_title"><h3>Tem uma pergunta? Estamos aqui para te ajudar!</h3></div>
+                    <div class="module_content contact_form">
+                      <div id="note"></div>
+                      <div id="fields">
+                        <form id="ajax-contact-form" action="#">
+                          <div class="row row20">
+                            <div class="col-sm-4"><input type="text" name="name" value="" placeholder="Nome *" /></div>
+                            <div class="col-sm-4"><input type="text" name="email" value="" placeholder="E-mail *" /></div>
+                            <div class="col-sm-4"><input type="text" name="subject" value="" placeholder="Assunto" /></div>
+                          </div>
+                          <textarea name="message" id="message" placeholder="Mensagem *"></textarea>
+                          <input type="submit" value="Enviar">
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 module_cont contact_info pb40">
+                    <div class="bg_title"><h3>Escritório</h3></div>
+                    <p>Telefone: +55 67 3026-4477</p>
+                    <p>R. Pedro Clestino, 1000<BR>Campo Grande, MS</p>
+                    <p class="mb20">E-mail: contato@cotarbem.com.br</p>
+                    <div class="post_socials">
+                      <ul>
+                        <li><a href="javascript:void(0);" class="soc_fb"><i class="icon-facebook"></i></a></li>
+                        <li><a href="javascript:void(0);" class="soc_tweet"><i class="icon-twitter"></i></a></li>
+                        <li><a href="javascript:void(0);" class="soc_google"><i class="icon-google-plus"></i></a></li>
+                        <li><a href="javascript:void(0);" class="soc_dribbble"><i class="icon-dribbble"></i></a></li>
+                        <li><a href="javascript:void(0);" class="soc_pinterest"><i class="icon-pinterest"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <br>
-    <div class="row">
-      <p class="lead">
-        Open-Source Full-Stack Solution For MEAN Applications
-      </p>
+
+    <div class="wall_map">
+      <a class="map_collapse" data-toggle="collapse" href="#collapse_map" aria-expanded="false" aria-controls="collapse_map">Nossa localização no mapa <i class="icon-map-marker"></i></a>
+      <div class="collapse" id="collapse_map">
+        <div class="module_google_map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5286.352201529939!2d-54.613216825957714!3d-20.464556982107766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9486e61f8550e127%3A0xe5436a94c5d26c67!2sR.+Pedro+Celestino%2C+1000+-+Centro%2C+Campo+Grande+-+MS%2C+79002-371!5e0!3m2!1spt-BR!2sbr!4v1458215902392" width="800" height="600" frameborder="0" style="border:0" allowfullscreen></iframe>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <p>
-        <a class="btn btn-primary btn-lg" href="http://meanjs.org" target="_blank">Learn more</a>
-      </p>
+
+    <div class="footer">
+      <div class="container">
+        <div class="footer_bottom">
+          <div class="footer_logo"><a href="index.html" class="logo"><img src="modules/core/client/img/retina/logo.png" class="logo_def" alt="" /><img src="modules/core/client/img/retina/logo.png" class="logo_retina" alt="" /></a></div>
+          <div class="copyright">Cotar Bem 2016 - Todos os Direitos Reservados | Desenvolvido por <a href="http://upsolucoesweb.com.br/" target="_blank">Up Soluções Web</a>.</div>
+          <div class="clear"></div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div>
-    <h2>Congrats! You've configured and run the sample application.</h2>
-    <p>MEAN.JS is a web application boilerplate, which means you should start changing everything :-)</p>
-    <p>This sample application tracks users and articles.</p>
-    <ul>
-      <li>
-        Click
-        <em>Sign Up</em> to get started.
-      </li>
-      <li>
-        Configure your app to work with your social accounts, by editing the
-        <em>/config/env/*.js</em> files.
-      </li>
-      <li>
-        Edit your users module.
-      </li>
-      <li>
-        Add new CRUD modules.
-      </li>
-      <li>
-        Have fun...
-      </li>
-    </ul>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-      <h2><strong>M</strong>ongoDB</h2>
-      <p><a target="_blank" href="http://mongodb.org/">MongoDB</a> is a NoSQL database. MongoDB's <a target="_blank" href="http://docs.mongodb.org/manual/">great manual</a> is the place to get started with NoSQL and MongoDB.</p>
+
+    <div class="fixed-menu"></div>
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        "use strict";
+        jQuery('.fullscreen_slider').show().revolution({
+          delay: 5000,
+          startwidth: 1170,
+          startheight: 700,
+          fullWidth:"off",
+          fullScreen:"on",
+          navigationType:"bullet",
+          fullScreenOffsetContainer: ".main_header",
+          fullScreenOffset: ""
+        });
+
+        // Testimonials
+        jQuery('.testimonials-info').slick({
+          fade: true,
+          arrows: false,
+          asNavFor: '.testimonials-nav',
+          adaptiveHeight: true
+        });
+
+        var visibl_show = 5; // Value = 1..5 (Max value - 5)
+
+        var count_els = jQuery('.testimonials-nav .nav_item_wrap').length;
+        if (count_els > visibl_show && visibl_show % 2 == 1) {
+          var center_true = true;
+        } else if (count_els <= visibl_show) {
+          var visibl_show = count_els;
+          var center_true = false;
+        }
+        else {
+          var center_true = false;
+        }
+        jQuery('.testimonials-nav').slick({
+          slidesToShow: visibl_show,
+          asNavFor: '.testimonials-info',
+          centerMode: center_true,
+          focusOnSelect: true,
+          autoplay: true,
+          responsive: [
+            {
+              breakpoint: 980,
+              settings: {
+                slidesToShow: 3
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
+        });
+      });
+
+      jQuery(document).ready(function($) {
+        $(".scroll").click(function(event){
+          event.preventDefault();
+          $('html,body').animate({scrollTop:$(this.hash).offset().top}, 1000);
+        });
+      });
+    </script>
+    <!--<div class="jumbotron text-center">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+          <img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/client/modules/core/client/img/brand/logo.png" />
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <p class="lead">
+          Open-Source Full-Stack Solution For MEAN Applications
+        </p>
+      </div>
+      <div class="row">
+        <p>
+          <a class="btn btn-primary btn-lg" href="http://meanjs.org" target="_blank">Learn more</a>
+        </p>
+      </div>
     </div>
-    <div class="col-md-3">
-      <h2><strong>E</strong>xpress</h2>
-      <p><a target="_blank" href="http://expressjs.com/"> Express</a> is a NodeJS server-side application web framework. Check out <a target="_blank" href="http://expressjs.com/4x/api.html">The ExpressJS API reference for more information</a> or <a target="_blank" href="http://stackoverflow.com/questions/8144214/learning-express-for-node-js">StackOverflow</a> for more info.</p>
-    </div>
-    <div class="col-md-3">
-      <h2><strong>A</strong>ngularJS</h2>
-      <p><a target="_blank" href="http://angularjs.org/">AngularJS</a> is client-side web application framework. The <a target="_blank" href="http://www.thinkster.io/">Thinkster Popular Guide</a> and <a target="_blank" href="https://egghead.io/">Egghead Videos</a> are great resources.</p>
-    </div>
-    <div class="col-md-3">
-      <h2><strong>N</strong>ode.js</h2>
-      <p><a target="_blank" href="http://nodejs.org/">Node.js</a> is a JavaScript run-time, popular for being a web server platform. Node's website and this <a target="_blank" href="http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js">stackOverflow thread</a> offer excellent starting points to get to grasps with node.</p>
-    </div>
-  </div>
-  <div class="well">
-    <h2>MEAN.JS Documentation</h2>
-    <p>
-      Once you're familiar with the foundation technology, check out the MEAN.JS Documentation:
+    <div>
+      <h2>Congrats! You've configured and run the sample application.</h2>
+      <p>MEAN.JS is a web application boilerplate, which means you should start changing everything :-)</p>
+      <p>This sample application tracks users and articles.</p>
       <ul>
-        <li><a target="_blank" href="http://meanjs.org/docs.html">MEAN.JS Documentation</a>
+        <li>
+          Click
+          <em>Sign Up</em> to get started.
         </li>
-        &lt;!&ndash; <li><a target="_blank" href="http://meanjs.org/generator.html">Yeoman Generator</a>
-				</li> &ndash;&gt;
-        <li><a target="_blank" href="http://meanjs.org/modules.html">Modules</a>
+        <li>
+          Configure your app to work with your social accounts, by editing the
+          <em>/config/env/*.js</em> files.
         </li>
-        <li><a target="_blank" href="http://meanjs.org/changelog.html">Changelog</a>
+        <li>
+          Edit your users module.
         </li>
-        <li><a target="_blank" href="http://meanjs.org/community.html">Community</a>
+        <li>
+          Add new CRUD modules.
         </li>
-        <li><a target="_blank" href="http://blog.meanjs.org">Blog</a>
+        <li>
+          Have fun...
         </li>
       </ul>
-    </p>
-  </div>
-  <br>Enjoy &amp; Keep Us Updated,
-  <br>The MEAN.JS Team.-->
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <h2><strong>M</strong>ongoDB</h2>
+        <p><a target="_blank" href="http://mongodb.org/">MongoDB</a> is a NoSQL database. MongoDB's <a target="_blank" href="http://docs.mongodb.org/manual/">great manual</a> is the place to get started with NoSQL and MongoDB.</p>
+      </div>
+      <div class="col-md-3">
+        <h2><strong>E</strong>xpress</h2>
+        <p><a target="_blank" href="http://expressjs.com/"> Express</a> is a NodeJS server-side application web framework. Check out <a target="_blank" href="http://expressjs.com/4x/api.html">The ExpressJS API reference for more information</a> or <a target="_blank" href="http://stackoverflow.com/questions/8144214/learning-express-for-node-js">StackOverflow</a> for more info.</p>
+      </div>
+      <div class="col-md-3">
+        <h2><strong>A</strong>ngularJS</h2>
+        <p><a target="_blank" href="http://angularjs.org/">AngularJS</a> is client-side web application framework. The <a target="_blank" href="http://www.thinkster.io/">Thinkster Popular Guide</a> and <a target="_blank" href="https://egghead.io/">Egghead Videos</a> are great resources.</p>
+      </div>
+      <div class="col-md-3">
+        <h2><strong>N</strong>ode.js</h2>
+        <p><a target="_blank" href="http://nodejs.org/">Node.js</a> is a JavaScript run-time, popular for being a web server platform. Node's website and this <a target="_blank" href="http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js">stackOverflow thread</a> offer excellent starting points to get to grasps with node.</p>
+      </div>
+    </div>
+    <div class="well">
+      <h2>MEAN.JS Documentation</h2>
+      <p>
+        Once you're familiar with the foundation technology, check out the MEAN.JS Documentation:
+        <ul>
+          <li><a target="_blank" href="http://meanjs.org/docs.html">MEAN.JS Documentation</a>
+          </li>
+          &lt;!&ndash; <li><a target="_blank" href="http://meanjs.org/generator.html">Yeoman Generator</a>
+                  </li> &ndash;&gt;
+          <li><a target="_blank" href="http://meanjs.org/modules.html">Modules</a>
+          </li>
+          <li><a target="_blank" href="http://meanjs.org/changelog.html">Changelog</a>
+          </li>
+          <li><a target="_blank" href="http://meanjs.org/community.html">Community</a>
+          </li>
+          <li><a target="_blank" href="http://blog.meanjs.org">Blog</a>
+          </li>
+        </ul>
+      </p>
+    </div>
+    <br>Enjoy &amp; Keep Us Updated,
+    <br>The MEAN.JS Team.-->
 </section>
