@@ -1015,43 +1015,57 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
 })();
 
 (function () {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('solicitacoes')
-    .controller('SolicitacoesListController', SolicitacoesListController);
+    angular
+        .module('solicitacoes')
+        .controller('SolicitacoesListController', SolicitacoesListController);
 
-  SolicitacoesListController.$inject = ['SolicitacoesService', '$filter'];
+    SolicitacoesListController.$inject = ['SolicitacoesService', '$filter', 'Socket', 'Authentication'];
 
-  function SolicitacoesListController(SolicitacoesService, $filter ) {
-    var vm = this;
+    function SolicitacoesListController(SolicitacoesService, $filter, Socket, Authentication) {
+        var vm = this;
+        vm.authentication = Authentication;
 
-    SolicitacoesService.query(function (data) {
-      vm.solicitacoes = data;
-      vm.buildPager();
-    });
+        function carregarSolicitacoes(){
+            SolicitacoesService.query(function (data) {
+                vm.solicitacoes = data;
+                vm.buildPager();
+            });
+        }
 
-    vm.buildPager = function () {
-      vm.pagedItems = [];
-      vm.itemsPerPage = 5;
-      vm.currentPage = 1;
-      vm.figureOutItemsToDisplay();
-    };
+        vm.buildPager = function () {
+            vm.pagedItems = [];
+            vm.itemsPerPage = 5;
+            vm.currentPage = 1;
+            vm.figureOutItemsToDisplay();
+        };
 
-    vm.figureOutItemsToDisplay = function () {
-      vm.filteredItems = $filter('filter')(vm.solicitacoes, {
-        $: vm.search
-      });
-      vm.filterLength = vm.filteredItems.length;
-      var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
-      var end = begin + vm.itemsPerPage;
-      vm.pagedItems = vm.filteredItems.slice(begin, end);
-    };
+        vm.figureOutItemsToDisplay = function () {
+            vm.filteredItems = $filter('filter')(vm.solicitacoes, {
+                $: vm.search
+            });
+            vm.filterLength = vm.filteredItems.length;
+            var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
+            var end = begin + vm.itemsPerPage;
+            vm.pagedItems = vm.filteredItems.slice(begin, end);
+        };
 
-    vm.pageChanged = function () {
-      vm.figureOutItemsToDisplay();
-    };
-  }
+        vm.pageChanged = function () {
+            vm.figureOutItemsToDisplay();
+        };
+
+        Socket.on('envia-cotacao-encerrada', function(data){
+            carregarSolicitacoes();
+        });
+
+        function init(){
+            carregarSolicitacoes();
+            Socket.emit('adiciona-usuario', vm.authentication.user);
+        }
+
+        init();
+    }
 })();
 
 (function () {
@@ -1063,10 +1077,10 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         .controller('SolicitacoesController', SolicitacoesController);
 
     SolicitacoesController.$inject = ['$scope', '$state', 'Authentication', 'cotacaoResolve', 'SegmentosService',
-        'SubsegmentosService', 'notificacoesApiService'];
+        'SubsegmentosService', 'notificacoesApiService', 'Socket'];
 
     function SolicitacoesController ($scope, $state, Authentication, solicitacoes, SegmentosService, SubsegmentosService,
-        notificacoesApiService) {
+        notificacoesApiService, Socket) {
 
         var vm = this;
 
@@ -1170,6 +1184,8 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                     _id: res._id,
                     subSegmento: res.subSegmento
                 };
+
+                Socket.emit('nova-solicitacao', res);
 
                 notificacoesApiService.notificarFornecedores(solicitacao).success(function(response){
                     /* jshint ignore:start */
@@ -1400,15 +1416,18 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         .module('cotacoes')
         .controller('CotacoesFornecedorListController', CotacoesFornecedorListController);
 
-    CotacoesFornecedorListController.$inject = ['SolicitacoesSegmentoService', '$filter'];
+    CotacoesFornecedorListController.$inject = ['SolicitacoesSegmentoService', '$filter', 'Socket', 'Authentication'];
 
-    function CotacoesFornecedorListController(SolicitacoesSegmentoService, $filter) {
+    function CotacoesFornecedorListController(SolicitacoesSegmentoService, $filter, Socket, Authentication) {
         var vm = this;
+        vm.authentication = Authentication;
 
-        SolicitacoesSegmentoService.query(function (data) {
-            vm.solicitacoes = data;
-            vm.buildPager();
-        });
+        function carregarSolicitacoes() {
+            SolicitacoesSegmentoService.query(function (data) {
+                vm.solicitacoes = data;
+                vm.buildPager();
+            });
+        }
 
         vm.buildPager = function () {
             vm.pagedItems = [];
@@ -1430,6 +1449,24 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         vm.pageChanged = function () {
             vm.figureOutItemsToDisplay();
         };
+
+        Socket.on('envia-solicitacao', function () {
+            carregarSolicitacoes();
+        });
+
+        Socket.on('envia-cotacao-encerrada', function(data){
+            carregarSolicitacoes();
+        });
+
+        function init(){
+            carregarSolicitacoes();
+
+            vm.authentication.user.subSegmentos.forEach(function(subSegmento){
+                Socket.emit('carrega-subSegmentos', subSegmento);
+            });
+        }
+
+        init();
     }
 })();
 
@@ -1440,7 +1477,8 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
     var app = angular.module('cotacoes');
 
     app.directive('myCurrentTime', ['$interval', 'dateFilter', 'SolicitacoesService', 'notificacoesApiService',
-        function ($interval, dateFilter, SolicitacoesService, notificacoesApiService) {
+            'Socket', 'Authentication',
+        function ($interval, dateFilter, SolicitacoesService, notificacoesApiService, Socket, Authentication) {
             // return the directive link function. (compile function not needed)
             return function (scope, element, attrs) {
                 var format = 'mm:ss a',  // date format
@@ -1457,7 +1495,7 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                     var diferencaData = moment.utc(moment(novaData, "DD/MM/YYYY  HH:mm:ss").diff(moment(dataSolicitacao, "DD/MM/YYYY  HH:mm:ss"))).format("HH:mm:ss");
                     var tempoEmSegundos = moment.duration(diferencaData).asSeconds();
 
-                    if (tempoEmSegundos <= 600) {
+                    if (tempoEmSegundos <= 10) {
                         var intervaloData = moment.utc(moment(dataSolicitacao, "DD/MM/YYYY  HH:mm:ss").diff(moment(novaData, "DD/MM/YYYY HH:mm:ss"))).local().format("HH:mm:ss");
                         contador = moment.utc(moment(intervaloData, "HH:mm:ss").diff(moment("23:50:00", "HH:mm:ss"))).format("mm:ss");
                         /*
@@ -1469,22 +1507,32 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
 
                     } else if (solicitacao.ativo) {
 
-                        SolicitacoesService.get({
-                            solicitacaoId: solicitacao._id
-                        }).$promise.then(function(response){
-                            $interval.cancel(stopTime);
-                            solicitacao = response;
-                            solicitacao.ativo = false;
-                            solicitacao.$update();
+                        /*var usuario = Authentication.user;
 
-                            var solicitacao = {
-                                _id: solicitacao._id,
-                                user: user
-                            };
-
-                            notificacoesApiService.notificarCliente(solicitacao).success(function(response){
-                            });
+                        var tipoUsuario = _.find(usuario.roles, function(data){
+                            return data === 'fornecedor';
                         });
+
+                        if(!_.isEmpty(tipoUsuario)) {*/
+                            SolicitacoesService.get({
+                                solicitacaoId: solicitacao._id
+                            }).$promise.then(function (response) {
+                                $interval.cancel(stopTime);
+                                solicitacao = response;
+                                solicitacao.ativo = false;
+                                solicitacao.$update();
+
+                                var solicitacaoEncerrada = {
+                                    _id: solicitacao._id,
+                                    user: user
+                                };
+
+                                notificacoesApiService.notificarCliente(solicitacaoEncerrada).success(function (response) {
+                                });
+
+                                Socket.emit('cotacao-encerrada', solicitacao);
+                            });
+                       /* }*/
 
                         /*services.solicitacaoServices.editar(solicitacao).success(function (response) {
                          $interval.cancel(stopTime);
@@ -1654,7 +1702,7 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
 
     angular.module('solicitacoes').factory('SolicitacoesSegmentoService', ['$resource',
         function ($resource) {
-            return $resource('api/solicitacoesPorSubSegmentos', {}, {
+            return $resource('api/solicitacoesPorSubSegmentos', {
             });
         }
     ]);
