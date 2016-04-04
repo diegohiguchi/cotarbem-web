@@ -14,17 +14,32 @@ var SolicitacaoSchema = new Schema({
     nome: {
       type: String,
       default: '',
-      required: 'Informe o nome do Produto',
+      required: 'Informe o nome do produto',
       trim: true
     },
-    tipoCotacao: {
+    codigo: {
       type: String,
-      enum: ['Unidade', 'Caixa']
+      default: '',
+      trim: true
+    },
+    /*tipoCotacao: {
+      type: String,
+      enum: ['Unidade', 'Caixa', 'kg', 'm', 'm²']
+    },*/
+    unidadeMedida:{
+      type: String,
+      default: '',
+      required: 'Informe a unidade de medida',
+      trim: true
     },
     quantidade: {
       type: Number,
       default: 0,
       required: 'Informe a Quantidade',
+    },
+    imagemURL: {
+      type: String,
+      default: ''
     },
     dataEntrega: Date
   }],
@@ -32,6 +47,7 @@ var SolicitacaoSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  tempo: String,
   subSegmento: {
     type: Schema.ObjectId,
     ref: 'Subsegmento'

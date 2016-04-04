@@ -19,78 +19,148 @@ var smtpTransport = nodemailer.createTransport(config.mailer.options);
 /**
  * Forgot for reset password (forgot POST)
  */
+/*exports.notificarFornecedores = function (req, res, next) {
+ async.waterfall([
+
+ function (done) {
+ var solicitacao = req.body;
+
+ if (solicitacao.subSegmento) {
+ User.find({
+ subSegmentos: solicitacao.subSegmento
+ }, function (err, users) {
+ if (!users) {
+ return res.status(400).send({
+ message: 'No account with that username has been found'
+ });
+ } else {
+ for (var i = 0; i < users.length; i++) {
+ if (users != null) {
+ done(err, users[i], solicitacao);
+ }
+ }
+ }
+ });
+ } else {
+ return res.status(400).send({
+ message: 'Username field must not be blank'
+ });
+ }
+ },
+ function (user, solicitacao, done) {
+ var httpTransport = 'http://';
+ if (config.secure && config.secure.ssl === true) {
+ httpTransport = 'https://';
+ }
+ res.render(path.resolve('modules/cotacoes/server/templates/solicitacoes'), {
+ name: user.displayName,
+ appName: config.app.title,
+ url: httpTransport + req.headers.host + '/cotacoes/fornecedor/' + solicitacao._id
+ }, function (err, emailHTML) {
+ done(err, emailHTML, user);
+ });
+ },
+ // If valid email, send reset email using service
+ function (emailHTML, user, done) {
+ /!*var mailOptions = {
+ to: user.email,
+ from: config.mailer.from,
+ subject: 'Solicitação para cotação',
+ html: emailHTML
+ };
+ smtpTransport.sendMail(mailOptions, function (err) {
+ if (!err) {
+ //res.sendfile('modules/cotacoes/client/views/cliente/solicitacoes/form-solicitacao-cliente.client.view.html');
+
+ /!*res.end({
+ message: 'An email has been sent to the provided email with further instructions.'
+ });*!/
+ } else {
+ return res.status(400).send({
+ message: 'Falhou enviou do email'
+ });
+ }
+
+ done(err);
+ });*!/
+
+ var email = new sendgrid.Email();
+ email.addTo(user.email);
+ email.subject = "Solicitação para cotação";
+ email.from = config.mailer.from;
+ email.text = 'Olá!';
+ email.html = emailHTML;
+ /!*email.setSubstitutions({fornecedorNome: [fornecedores[i]], clienteNome: [cliente.displayName], clienteEmail: [cliente.email]});
+ email.addFilter('templates', 'template_id', '872ad5ec-0200-426b-b297-bbae224ac0b0');*!/
+
+ sendgrid.send(email, function(err,json){
+ if (err) {
+ return console.error(err);
+ }
+
+ done(err);
+ });
+ }
+ ], function (err) {
+ if (err) {
+ return next(err);
+ }
+
+ res.sendFile(path.resolve('modules/cotacoes/client/views/cliente/solicitacoes/form-solicitacao-cliente.client.view.html'));
+ });
+ };*/
+
 exports.notificarFornecedores = function (req, res, next) {
-    async.waterfall([
+    var solicitacao = req.body;
 
-        function (done) {
-            var solicitacao = req.body;
-
-            if (solicitacao.subSegmento) {
-                User.find({
-                    subSegmentos: solicitacao.subSegmento
-                }, function (err, users) {
-                    if (!users) {
-                        return res.status(400).send({
-                            message: 'No account with that username has been found'
-                        });
-                    } else {
-                        for (var i = 0; i < users.length; i++) {
-                            if (users != null) {
-                                done(err, users[i], solicitacao);
-                            }
-                        }
-                    }
+    if (solicitacao.subSegmento) {
+        User.find({
+            subSegmentos: solicitacao.subSegmento
+        }, function (err, users) {
+            if (!users) {
+                return res.status(400).send({
+                    message: 'No account with that username has been found'
                 });
             } else {
-                return res.status(400).send({
-                    message: 'Username field must not be blank'
-                });
-            }
-        },
-        function (user, solicitacao, done) {
-            var httpTransport = 'http://';
-            if (config.secure && config.secure.ssl === true) {
-                httpTransport = 'https://';
-            }
-            res.render(path.resolve('modules/cotacoes/server/templates/solicitacoes'), {
-                name: user.displayName,
-                appName: config.app.title,
-                url: httpTransport + req.headers.host + '/cotacoes/fornecedor/' + solicitacao._id
-            }, function (err, emailHTML) {
-                done(err, emailHTML, user);
-            });
-        },
-        // If valid email, send reset email using service
-        function (emailHTML, user, done) {
-            var mailOptions = {
-                to: user.email,
-                from: config.mailer.from,
-                subject: 'Solicitação para cotação',
-                html: emailHTML
-            };
-            smtpTransport.sendMail(mailOptions, function (err) {
-                if (!err) {
-                    //res.sendfile('modules/cotacoes/client/views/cliente/solicitacoes/form-solicitacao-cliente.client.view.html');
-
-                    /*res.end({
-                     message: 'An email has been sent to the provided email with further instructions.'
-                     });*/
-                } else {
-                    return res.status(400).send({
-                        message: 'Falhou enviou do email'
-                    });
+                var httpTransport = 'http://';
+                if (config.secure && config.secure.ssl === true) {
+                    httpTransport = 'https://';
                 }
 
-                done(err);
-            });
-        }
-    ], function (err) {
-        if (err) {
-            return next(err);
-        }
+                res.render(path.resolve('modules/cotacoes/server/templates/solicitacoes'), {
+                    //name: user.displayName,
+                    appName: config.app.title,
+                    url: httpTransport + req.headers.host + '/cotacoes/fornecedor/' + solicitacao._id
+                }, function (err, emailHTML) {
+                    if (users != null) {
+                        var email = new sendgrid.Email();
 
-        res.sendFile(path.resolve('modules/cotacoes/client/views/cliente/solicitacoes/form-solicitacao-cliente.client.view.html'));
-    });
+                        email.subject = "Solicitação para cotação";
+                        email.from = config.mailer.from;
+                        email.text = 'Olá!';
+                        email.html = emailHTML;
+
+                        for (var i = 0; i < users.length; i++) {
+                            email.addTo(users[i].email);
+                        }
+
+                        sendgrid.send(email, function (err, json) {
+                            if (err) {
+                                return console.error(err);
+                            }
+
+                            res.sendFile(path.resolve('modules/cotacoes/client/views/cliente/solicitacoes/form-solicitacao-cliente.client.view.html'));
+                        });
+                    }
+                });
+
+            }
+        });
+    } else {
+        return res.status(400).send({
+            message: 'Username field must not be blank'
+        });
+    }
 };
 
 exports.notificarCliente = function (req, res, next) {

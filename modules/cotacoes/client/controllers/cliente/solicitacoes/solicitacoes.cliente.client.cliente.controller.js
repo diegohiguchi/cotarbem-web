@@ -7,19 +7,19 @@
         .controller('SolicitacoesController', SolicitacoesController);
 
     SolicitacoesController.$inject = ['$scope', '$state', 'Authentication', 'cotacaoResolve', 'SegmentosService',
-        'SubsegmentosService', 'notificacoesApiService', 'Socket'];
+        'SubsegmentosService', 'notificacoesApiService', 'Socket', '$timeout', '$window', 'FileUploader'];
 
     function SolicitacoesController ($scope, $state, Authentication, solicitacoes, SegmentosService, SubsegmentosService,
-        notificacoesApiService, Socket) {
+        notificacoesApiService, Socket, $timeout, $window, FileUploader) {
 
         var vm = this;
-
         vm.authentication = Authentication;
         vm.segmentos = SegmentosService.query();
         vm.subSegmentosQuery = SubsegmentosService.query();
         vm.solicitacao = solicitacoes;
         vm.error = null;
         vm.form = {};
+        vm.produto = {};
         vm.remove = remove;
         vm.save = save;
         vm.tipoCotacao = [
@@ -42,7 +42,7 @@
 
         vm.adicionarProduto = function(produto) {
             if(produto === null || produto === undefined || (produto.nome === undefined || produto.nome === '') ||
-                produto.tipoCotacao === undefined || produto.quantidade === undefined ) {
+                produto.unidadeMedida === undefined || produto.quantidade === undefined ) {
                 /* jshint ignore:start */
                 toastr.error('Informe o dados do Produto');
                 /* jshint ignore:end */
@@ -50,7 +50,8 @@
                 return;
             }
 
-            vm.produto = null;
+            vm.produto = {};
+            vm.uploader.clearQueue();
             vm.solicitacao.produtos.push(produto);
         };
 
@@ -101,6 +102,8 @@
                 return false;
             }
 
+            vm.solicitacao.tempo = vm.solicitacao.tempoCotacao;
+
             // TODO: move create/update logic to service
             if (vm.solicitacao._id) {
                 vm.solicitacao.$update(successCallback, errorCallback);
@@ -129,5 +132,71 @@
                 vm.error = res.data.message;
             }
         }
+
+        // Create file uploader instance
+        vm.uploader = new FileUploader({
+            //url: 'api/produtos/picture',
+            alias: 'newProfilePicture'
+        });
+
+        // Set file uploader image filter
+        vm.uploader.filters.push({
+            name: 'imageFilter',
+            fn: function (item, options) {
+                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+            }
+        });
+
+        // Called after the user selected a new picture file
+        vm.uploader.onAfterAddingFile = function (fileItem) {
+            if ($window.FileReader) {
+                var fileReader = new FileReader();
+                fileReader.readAsDataURL(fileItem._file);
+
+                fileReader.onload = function (fileReaderEvent) {
+                    $timeout(function () {
+                        vm.produto.imagemURL = fileReaderEvent.target.result;
+                    }, 0);
+                };
+            }
+        };
+
+        // Called after the user has successfully uploaded a new picture
+        vm.uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            // Show success message
+            $scope.success = true;
+
+            // Populate user object
+            debugger
+
+            // Clear upload buttons
+            vm.cancelUpload();
+        };
+
+        // Called after the user has failed to uploaded a new picture
+        vm.uploader.onErrorItem = function (fileItem, response, status, headers) {
+            // Clear upload buttons
+            vm.cancelUpload();
+
+            // Show error message
+            $scope.error = response.message;
+        };
+
+        // Change user profile picture
+        vm.uploadProfilePicture = function () {
+            debugger
+            // Clear messages
+            $scope.success = $scope.error = null;
+
+            // Start upload
+            vm.uploader.uploadAll();
+        };
+
+        // Cancel the upload process
+        vm.cancelUpload = function () {
+            vm.uploader.clearQueue();
+            vm.produto.imagemURL = '';
+        };
     }
 })();

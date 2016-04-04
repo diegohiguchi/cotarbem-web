@@ -17,9 +17,20 @@ var CotacaoSchema = new Schema({
             required: 'Informe o nome do Produto',
             trim: true
         },
-        tipoCotacao: {
+        codigo: {
+            type: String,
+            default: '',
+            trim: true
+        },
+        /*tipoCotacao: {
             type: String,
             enum: ['Unidade', 'Caixa']
+        },*/
+        unidadeMedida:{
+            type: String,
+            default: '',
+            required: 'Informe a unidade de medida',
+            trim: true
         },
         quantidade: {
             type: Number,
@@ -29,6 +40,10 @@ var CotacaoSchema = new Schema({
         disponivel: {
             default: false,
             type: Boolean
+        },
+        imagemURL: {
+            type: String,
+            default: ''
         },
         dataEntrega: Date,
         valor: Number

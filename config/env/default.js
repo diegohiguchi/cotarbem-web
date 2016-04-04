@@ -35,6 +35,12 @@ module.exports = {
       limits: {
         fileSize: 1*1024*1024 // Max file size in bytes (1 MB)
       }
+    },
+    produtosUpload: {
+      dest: './modules/cotacoes/client/img/produtos/uploads/', // Profile upload destination path
+      limits: {
+        fileSize: 1*1024*1024 // Max file size in bytes (1 MB)
+      }
     }
   }
 };

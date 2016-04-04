@@ -17,15 +17,22 @@
 
                     var novaData = new Date();
                     novaData = moment(novaData).format('DD/MM/YYYY HH:mm:ss');
+
                     var dataSolicitacao = moment.utc(solicitacao.dataCadastro, "YYYY-MM-DD HH:mm:ss").local();
+                    var mostraTempoCotacao = moment(solicitacao.tempo, "HH:mm:ss");
 
                     var diferencaData = moment.utc(moment(novaData, "DD/MM/YYYY  HH:mm:ss").diff(moment(dataSolicitacao, "DD/MM/YYYY  HH:mm:ss"))).format("HH:mm:ss");
                     var tempoEmSegundos = moment.duration(diferencaData).asSeconds();
 
-                    //if (tempoEmSegundos <= 600) {
-                    if (tempoEmSegundos <= 10) {
+                    var tempoCotacao = moment.duration(moment(solicitacao.tempo).format('HH:mm:ss')).asSeconds();
+
+                    if (tempoEmSegundos <= tempoCotacao) {
                         var intervaloData = moment.utc(moment(dataSolicitacao, "DD/MM/YYYY  HH:mm:ss").diff(moment(novaData, "DD/MM/YYYY HH:mm:ss"))).local().format("HH:mm:ss");
-                        contador = moment.utc(moment(intervaloData, "HH:mm:ss").diff(moment("23:50:00", "HH:mm:ss"))).format("mm:ss");
+                        //contador = moment.utc(moment(intervaloData, "HH:mm:ss").diff(moment("23:50:00", "HH:mm:ss"))).format("mm:ss");
+
+                        contador = (tempoCotacao - tempoEmSegundos);
+                        contador = moment().startOf('day').seconds(contador).format('HH:mm:ss');
+
                         /*
                          var progressBar = element.parent().find('div')[0];
 
@@ -54,29 +61,12 @@
                             Socket.emit('cotacao-encerrada', solicitacao);
                         });
 
-                        /*services.solicitacaoServices.editar(solicitacao).success(function (response) {
-                         $interval.cancel(stopTime);
-                         }).then(function () {
-                         var device = {};
-                         device = {
-                         usuarioId: solicitacao.usuarioId,
-                         titulo: 'Cotar Bem',
-                         mensagem: 'Cotação encerrada'
-                         }
-
-                         services.deviceTokenServices.notificar(device).success(function (response) {
-                         });
-
-                         solicitacao.url = "app/cotacao/solicitacao/produto/notificacao/solicitacaoId?id=";
-
-                         socket.emit('cotacao-encerrada', solicitacao);
-                         });*/
-
                     } else {
                         $interval.cancel(stopTime);
                     }
 
-                    element.text(dateFilter(contador, format));
+                    //element.text(dateFilter(contador, format));
+                    element.text(contador);
                 }
 
                 // watch the expression, and update the UI on change.
@@ -95,4 +85,28 @@
                 });
             }
         }]);
+
+    app.directive("strToTime", function(){
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModelController) {
+                ngModelController.$parsers.push(function(data) {
+                    if (!data)
+                        return "";
+                    return ("0" + data.getHours().toString()).slice(-2) + ":" + ("0" + data.getMinutes().toString()).slice(-2);
+                });
+
+                ngModelController.$formatters.push(function(data) {
+                    if (!data) {
+                        return null;
+                    }
+                    var d = new Date(1970,1,1);
+                    var splitted = data.split(":");
+                    d.setHours(splitted[0]);
+                    d.setMinutes(splitted[1]);
+                    return d;
+                });
+            }
+        };
+    });
 })();

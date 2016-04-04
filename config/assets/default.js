@@ -13,7 +13,7 @@ module.exports = {
         'public/lib/theme/css/custom.css'
       ],
       js: [
-        'public/lib/angular/angular.js',
+        'public/lib/angular/angular.min.js',
         'public/lib/jquery/dist/jquery.min.js',
         'public/lib/angular-resource/angular-resource.js',
         'public/lib/angular-animate/angular-animate.js',

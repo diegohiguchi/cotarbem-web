@@ -1077,19 +1077,19 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         .controller('SolicitacoesController', SolicitacoesController);
 
     SolicitacoesController.$inject = ['$scope', '$state', 'Authentication', 'cotacaoResolve', 'SegmentosService',
-        'SubsegmentosService', 'notificacoesApiService', 'Socket'];
+        'SubsegmentosService', 'notificacoesApiService', 'Socket', '$timeout', '$window', 'FileUploader'];
 
     function SolicitacoesController ($scope, $state, Authentication, solicitacoes, SegmentosService, SubsegmentosService,
-        notificacoesApiService, Socket) {
+        notificacoesApiService, Socket, $timeout, $window, FileUploader) {
 
         var vm = this;
-
         vm.authentication = Authentication;
         vm.segmentos = SegmentosService.query();
         vm.subSegmentosQuery = SubsegmentosService.query();
         vm.solicitacao = solicitacoes;
         vm.error = null;
         vm.form = {};
+        vm.produto = {};
         vm.remove = remove;
         vm.save = save;
         vm.tipoCotacao = [
@@ -1112,7 +1112,7 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
 
         vm.adicionarProduto = function(produto) {
             if(produto === null || produto === undefined || (produto.nome === undefined || produto.nome === '') ||
-                produto.tipoCotacao === undefined || produto.quantidade === undefined ) {
+                produto.unidadeMedida === undefined || produto.quantidade === undefined ) {
                 /* jshint ignore:start */
                 toastr.error('Informe o dados do Produto');
                 /* jshint ignore:end */
@@ -1120,7 +1120,8 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                 return;
             }
 
-            vm.produto = null;
+            vm.produto = {};
+            vm.uploader.clearQueue();
             vm.solicitacao.produtos.push(produto);
         };
 
@@ -1171,6 +1172,8 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                 return false;
             }
 
+            vm.solicitacao.tempo = vm.solicitacao.tempoCotacao;
+
             // TODO: move create/update logic to service
             if (vm.solicitacao._id) {
                 vm.solicitacao.$update(successCallback, errorCallback);
@@ -1199,6 +1202,72 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                 vm.error = res.data.message;
             }
         }
+
+        // Create file uploader instance
+        vm.uploader = new FileUploader({
+            //url: 'api/produtos/picture',
+            alias: 'newProfilePicture'
+        });
+
+        // Set file uploader image filter
+        vm.uploader.filters.push({
+            name: 'imageFilter',
+            fn: function (item, options) {
+                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+            }
+        });
+
+        // Called after the user selected a new picture file
+        vm.uploader.onAfterAddingFile = function (fileItem) {
+            if ($window.FileReader) {
+                var fileReader = new FileReader();
+                fileReader.readAsDataURL(fileItem._file);
+
+                fileReader.onload = function (fileReaderEvent) {
+                    $timeout(function () {
+                        vm.produto.imagemURL = fileReaderEvent.target.result;
+                    }, 0);
+                };
+            }
+        };
+
+        // Called after the user has successfully uploaded a new picture
+        vm.uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            // Show success message
+            $scope.success = true;
+
+            // Populate user object
+            debugger
+
+            // Clear upload buttons
+            vm.cancelUpload();
+        };
+
+        // Called after the user has failed to uploaded a new picture
+        vm.uploader.onErrorItem = function (fileItem, response, status, headers) {
+            // Clear upload buttons
+            vm.cancelUpload();
+
+            // Show error message
+            $scope.error = response.message;
+        };
+
+        // Change user profile picture
+        vm.uploadProfilePicture = function () {
+            debugger
+            // Clear messages
+            $scope.success = $scope.error = null;
+
+            // Start upload
+            vm.uploader.uploadAll();
+        };
+
+        // Cancel the upload process
+        vm.cancelUpload = function () {
+            vm.uploader.clearQueue();
+            vm.produto.imagemURL = '';
+        };
     }
 })();
 
@@ -1490,15 +1559,22 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
 
                     var novaData = new Date();
                     novaData = moment(novaData).format('DD/MM/YYYY HH:mm:ss');
+
                     var dataSolicitacao = moment.utc(solicitacao.dataCadastro, "YYYY-MM-DD HH:mm:ss").local();
+                    var mostraTempoCotacao = moment(solicitacao.tempo, "HH:mm:ss");
 
                     var diferencaData = moment.utc(moment(novaData, "DD/MM/YYYY  HH:mm:ss").diff(moment(dataSolicitacao, "DD/MM/YYYY  HH:mm:ss"))).format("HH:mm:ss");
                     var tempoEmSegundos = moment.duration(diferencaData).asSeconds();
 
-                    //if (tempoEmSegundos <= 600) {
-                    if (tempoEmSegundos <= 10) {
+                    var tempoCotacao = moment.duration(moment(solicitacao.tempo).format('HH:mm:ss')).asSeconds();
+
+                    if (tempoEmSegundos <= tempoCotacao) {
                         var intervaloData = moment.utc(moment(dataSolicitacao, "DD/MM/YYYY  HH:mm:ss").diff(moment(novaData, "DD/MM/YYYY HH:mm:ss"))).local().format("HH:mm:ss");
-                        contador = moment.utc(moment(intervaloData, "HH:mm:ss").diff(moment("23:50:00", "HH:mm:ss"))).format("mm:ss");
+                        //contador = moment.utc(moment(intervaloData, "HH:mm:ss").diff(moment("23:50:00", "HH:mm:ss"))).format("mm:ss");
+
+                        contador = (tempoCotacao - tempoEmSegundos);
+                        contador = moment().startOf('day').seconds(contador).format('HH:mm:ss');
+
                         /*
                          var progressBar = element.parent().find('div')[0];
 
@@ -1527,29 +1603,12 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                             Socket.emit('cotacao-encerrada', solicitacao);
                         });
 
-                        /*services.solicitacaoServices.editar(solicitacao).success(function (response) {
-                         $interval.cancel(stopTime);
-                         }).then(function () {
-                         var device = {};
-                         device = {
-                         usuarioId: solicitacao.usuarioId,
-                         titulo: 'Cotar Bem',
-                         mensagem: 'Cotação encerrada'
-                         }
-
-                         services.deviceTokenServices.notificar(device).success(function (response) {
-                         });
-
-                         solicitacao.url = "app/cotacao/solicitacao/produto/notificacao/solicitacaoId?id=";
-
-                         socket.emit('cotacao-encerrada', solicitacao);
-                         });*/
-
                     } else {
                         $interval.cancel(stopTime);
                     }
 
-                    element.text(dateFilter(contador, format));
+                    //element.text(dateFilter(contador, format));
+                    element.text(contador);
                 }
 
                 // watch the expression, and update the UI on change.
@@ -1568,6 +1627,30 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                 });
             }
         }]);
+
+    app.directive("strToTime", function(){
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModelController) {
+                ngModelController.$parsers.push(function(data) {
+                    if (!data)
+                        return "";
+                    return ("0" + data.getHours().toString()).slice(-2) + ":" + ("0" + data.getMinutes().toString()).slice(-2);
+                });
+
+                ngModelController.$formatters.push(function(data) {
+                    if (!data) {
+                        return null;
+                    }
+                    var d = new Date(1970,1,1);
+                    var splitted = data.split(":");
+                    d.setHours(splitted[0]);
+                    d.setMinutes(splitted[1]);
+                    return d;
+                });
+            }
+        };
+    });
 })();
 
 (function () {

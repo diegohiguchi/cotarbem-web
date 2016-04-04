@@ -59,11 +59,13 @@
   <table class="table table-striped" ng-show="vm.solicitacao.produtos.length">
     <thead>
     <tr>
-      <th style="width: 25%">Nome do Produto</th>
-      <th style="width: 15%">Tipo da Cotação</th>
-      <th style="width: 10%">Quantidade</th>
-      <th style="width: 15%">Data de Entrega</th>
-      <th style="width: 10%">Disponível</th>
+      <th style="width: 18%">Nome do Produto</th>
+      <th style="width: 10%">Código</th>
+      <th style="width: 12%">Unidade de Medida</th>
+      <th style="width: 9%">Quantidade</th>
+      <th style="width: 9%">Data de Entrega</th>
+      <th style="width: 15%">Imagem</th>
+      <th style="width: 8%">Disponível</th>
       <th style="width: 15%">Valor</th>
       <th style="width: 15%">Valor Total</th>
     </tr>
@@ -71,9 +73,11 @@
     <tbody>
     <tr ng-repeat="produto in vm.solicitacao.produtos">
       <td>{{produto.nome}}</td>
-      <td>{{produto.tipoCotacao}}</td>
+      <td>{{produto.codigo}}</td>
+      <td>{{produto.unidadeMedida}}</td>
       <td>{{produto.quantidade}}</td>
       <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
+      <td><img ng-src="{{produto.imagemURL}}" class="img-thumbnail user-profile-picture"></td>
       <td><input type="checkbox" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.disponivel"></td>
       <td>
         <input class="form-control" type="text" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.valor" placeholder="R$ 0,00" ui-money-mask="2" maxlength="13">
@@ -110,7 +114,7 @@
     <tr>
       <th style="width: 15%">Empresa</th>
       <th style="width: 20%">Nome do Produto</th>
-      <th style="width: 15%">Tipo da Cotação</th>
+      <th style="width: 15%">Unidade de Medida</th>
       <th style="width: 8%">Quantidade</th>
       <th style="width: 12%">Data de Entrega</th>
       <th style="width: 10%">Disponível</th>
@@ -136,7 +140,7 @@
     <tr ng-repeat="produto in cotacao">
       <td>{{produto.user.displayName}}</td>
       <td>{{produto.nome}}</td>
-      <td>{{produto.tipoCotacao}}</td>
+      <td>{{produto.unidadeMedida}}</td>
       <td>{{produto.quantidade}}</td>
       <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
       <td><input ng-disabled="true" type="checkbox" ng-model="produto.disponivel"></td>
