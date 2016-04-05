@@ -1122,10 +1122,10 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                 return;
             }
 
-            vm.solicitacao.produtos.push(produto);
             vm.produto = {};
-            vm.uploader.clearQueue();
-            vm.produto.imagemURL = '';
+            vm.solicitacao.produtos.push(produto);
+            //vm.uploader.clearQueue();
+            //vm.produto.imagemURL = '';
         };
 
         vm.removerProduto = function(produto){
@@ -1190,6 +1190,7 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                     subSegmento: response.subSegmento
                 };
 
+                debugger
                 vm.uploader.onBeforeUploadItem = function(item){
                     item.formData = [solicitacao];
                 };
@@ -1278,6 +1279,10 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         // Cancel the upload process
         vm.cancelUpload = function () {
             vm.uploader.clearQueue();
+            vm.produto.imagemURL = '';
+        };
+
+        vm.cancelar = function () {
             vm.produto.imagemURL = '';
         };
     }
