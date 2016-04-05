@@ -8,6 +8,8 @@ var path = require('path'),
     Solicitacoes = mongoose.model('Solicitacoes'),
     Cotacoes = mongoose.model('Cotacoes'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+    multer = require('multer'),
+    config = require(path.resolve('./config/config')),
     _ = require('lodash');
 
 /**
@@ -26,6 +28,69 @@ exports.create = function(req, res) {
             res.jsonp(solicitacoes);
         }
     });
+};
+
+exports.uploadImages = function(req, res) {
+
+    var upload = multer(config.uploads.produtoUpload).array('novaImagemProduto');
+    var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
+
+    // Filtering to upload only images
+    upload.fileFilter = profileUploadFileFilter;
+
+    upload(req, res, function (uploadError) {
+        if (uploadError) {
+            return res.status(400).send({
+                message: 'Error occurred while uploading profile picture'
+            });
+        } else {
+            var id = req.body._id;
+
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(400).send({
+                    message: 'Solicitacoes is invalid'
+                });
+            }
+
+            Solicitacoes.findById(id).populate('user', 'displayName').exec(function (err, solicitacoes) {
+                if (err) {
+                    return next(err);
+                } else if (!solicitacoes) {
+                    return res.status(404).send({
+                        message: 'No Solicitacoes with that identifier has been found'
+                    });
+                }
+
+                for(var i = 0; i < solicitacoes.produtos.length; i++) {
+                    if(req.files[i] !== undefined)
+                        solicitacoes.produtos[i].imagemURL = config.uploads.produtoUpload.dest + req.files[i].filename;
+                }
+
+                solicitacoes.save(function(err) {
+                    if (err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        res.jsonp(solicitacoes);
+                    }
+                });
+
+            });
+        }
+    });
+
+    /*for(var i = 0; i < solicitacoes.produtos.length; i++){
+     upload(req, res, function (uploadError) {
+     if (uploadError) {
+     return res.status(400).send({
+     message: 'Error occurred while uploading profile picture'
+     });
+     } else {
+     solicitacoes.produtos[i].imagemURL = config.uploads.produtoUpload.dest +  req[i].file.filename;
+     }
+     });
+     }*/
 };
 
 /**

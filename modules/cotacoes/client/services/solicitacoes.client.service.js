@@ -25,6 +25,21 @@
         }
     ]);
 
+    angular.module('solicitacoes').factory('solicitacoesApiService', ['$http', solicitacoesApiService]);
+
+    function solicitacoesApiService($http) {
+
+        function adicionar(solicitacao) {
+            return $http.post('/api/solicitacoes', solicitacao);
+        }
+
+        var services = {
+            adicionar: adicionar
+        };
+
+        return services;
+    }
+
    /* angular.module('solicitacoes').factory('CotacoesPorSolicitacaoService', ['$resource',
         function ($resource) {
             return $resource('api/cotacoes/solicitacao/:solicitacaoId', {

@@ -7,10 +7,10 @@
         .controller('SolicitacoesController', SolicitacoesController);
 
     SolicitacoesController.$inject = ['$scope', '$state', 'Authentication', 'cotacaoResolve', 'SegmentosService',
-        'SubsegmentosService', 'notificacoesApiService', 'Socket', '$timeout', '$window', 'FileUploader'];
+        'SubsegmentosService', 'notificacoesApiService', 'Socket', '$timeout', '$window', 'FileUploader', 'solicitacoesApiService'];
 
     function SolicitacoesController ($scope, $state, Authentication, solicitacoes, SegmentosService, SubsegmentosService,
-        notificacoesApiService, Socket, $timeout, $window, FileUploader) {
+                                     notificacoesApiService, Socket, $timeout, $window, FileUploader, solicitacoesApiService) {
 
         var vm = this;
         vm.authentication = Authentication;
@@ -44,15 +44,16 @@
             if(produto === null || produto === undefined || (produto.nome === undefined || produto.nome === '') ||
                 produto.unidadeMedida === undefined || produto.quantidade === undefined ) {
                 /* jshint ignore:start */
-                toastr.error('Informe o dados do Produto');
+                toastr.error('Preencha os campos com asterisco (*) do novo produto');
                 /* jshint ignore:end */
 
                 return;
             }
 
+            vm.solicitacao.produtos.push(produto);
             vm.produto = {};
             vm.uploader.clearQueue();
-            vm.solicitacao.produtos.push(produto);
+            vm.produto.imagemURL = '';
         };
 
         vm.removerProduto = function(produto){
@@ -104,6 +105,21 @@
 
             vm.solicitacao.tempo = vm.solicitacao.tempoCotacao;
 
+            /*solicitacoesApiService.adicionar(vm.solicitacao).success(function(response){
+             vm.uploader.formData = response.data;
+             vm.uploader.uploadAll();
+             }).then(function(){
+             Socket.emit('nova-solicitacao', response);
+
+             notificacoesApiService.notificarFornecedores(solicitacao).success(function(response){
+             /!* jshint ignore:start *!/
+             toastr.success('Solicitação enviada com sucesso');
+             /!* jshint ignore:end *!/
+             $state.go('cotacoesCliente.list');
+             });
+             });
+             */
+
             // TODO: move create/update logic to service
             if (vm.solicitacao._id) {
                 vm.solicitacao.$update(successCallback, errorCallback);
@@ -111,32 +127,51 @@
                 vm.solicitacao.$save(successCallback, errorCallback);
             }
 
-            function successCallback(res) {
-
+            function successCallback(response) {
                 var solicitacao = {
-                    _id: res._id,
-                    subSegmento: res.subSegmento
+                    _id: response._id,
+                    subSegmento: response.subSegmento
                 };
 
-                Socket.emit('nova-solicitacao', res);
+                vm.uploader.onBeforeUploadItem = function(item){
+                    item.formData = [solicitacao];
+                };
 
-                notificacoesApiService.notificarFornecedores(solicitacao).success(function(response){
-                    /* jshint ignore:start */
-                    toastr.success('Solicitação enviada com sucesso');
-                    /* jshint ignore:end */
-                    $state.go('cotacoesCliente.list');
-                });
+                if(vm.uploader.queue.length > 0)
+                    vm.uploader.uploadAll();
+                else
+                    notificarFornecedores(response);
+
+                /*Socket.emit('nova-solicitacao', res);
+
+                 notificacoesApiService.notificarFornecedores(solicitacao).success(function(response){
+                 /!* jshint ignore:start *!/
+                 toastr.success('Solicitação enviada com sucesso');
+                 /!* jshint ignore:end *!/
+                 $state.go('cotacoesCliente.list');
+                 });*/
             }
 
-            function errorCallback(res) {
-                vm.error = res.data.message;
+            function errorCallback(response) {
+                vm.error = response.data.message;
             }
+        }
+
+        function notificarFornecedores(solicitacao){
+            Socket.emit('nova-solicitacao', solicitacao);
+
+            notificacoesApiService.notificarFornecedores(solicitacao).success(function(response){
+                /* jshint ignore:start */
+                toastr.success('Solicitação enviada com sucesso');
+                /* jshint ignore:end */
+                $state.go('cotacoesCliente.list');
+            });
         }
 
         // Create file uploader instance
         vm.uploader = new FileUploader({
-            //url: 'api/produtos/picture',
-            alias: 'newProfilePicture'
+            url: '/api/solicitacoes/cliente/uploadImages',
+            alias: 'novaImagemProduto'
         });
 
         // Set file uploader image filter
@@ -165,13 +200,12 @@
         // Called after the user has successfully uploaded a new picture
         vm.uploader.onSuccessItem = function (fileItem, response, status, headers) {
             // Show success message
-            $scope.success = true;
-
-            // Populate user object
-            debugger
+            //$scope.success = true;
 
             // Clear upload buttons
             vm.cancelUpload();
+
+            notificarFornecedores(response);
         };
 
         // Called after the user has failed to uploaded a new picture
@@ -185,7 +219,7 @@
 
         // Change user profile picture
         vm.uploadProfilePicture = function () {
-            debugger
+
             // Clear messages
             $scope.success = $scope.error = null;
 

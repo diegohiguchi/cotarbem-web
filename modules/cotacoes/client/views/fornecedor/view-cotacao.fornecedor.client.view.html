@@ -77,7 +77,7 @@
       <td>{{produto.unidadeMedida}}</td>
       <td>{{produto.quantidade}}</td>
       <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
-      <td><img ng-src="{{produto.imagemURL}}" class="img-thumbnail user-profile-picture"></td>
+      <td><img ng-if="produto.imagemURL !== ''" ng-src="{{produto.imagemURL}}" class="img-thumbnail user-profile-picture"></td>
       <td><input type="checkbox" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.disponivel"></td>
       <td>
         <input class="form-control" type="text" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.valor" placeholder="R$ 0,00" ui-money-mask="2" maxlength="13">

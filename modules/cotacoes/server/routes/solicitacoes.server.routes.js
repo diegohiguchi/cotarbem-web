@@ -20,6 +20,8 @@ module.exports = function(app) {
     .put(solicitacoes.update)
     .delete(solicitacoes.delete);
 
+  app.route('/api/solicitacoes/cliente/uploadImages').post(solicitacoes.uploadImages);
+
  /* app.route('/api/cotacoes/solicitacao/:solicitacaoId').all(solicitacoesPolicy.isAllowed)
       .get(solicitacoes.cotacaoSolicitacaoByID)
       .get(solicitacoes.list)

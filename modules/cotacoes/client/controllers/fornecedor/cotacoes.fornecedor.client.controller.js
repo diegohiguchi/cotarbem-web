@@ -162,9 +162,12 @@
                                 vm.cotacoes.push({
                                     user: response[i].user,
                                     nome: response[i].produtos[j].nome,
+                                    codigo: response[i].produtos[j].codigo,
+                                    unidadeMedida: response[i].produtos[j].unidadeMedida,
                                     tipoCotacao: response[i].produtos[j].tipoCotacao,
                                     quantidade: response[i].produtos[j].quantidade,
                                     dataEntrega: response[i].produtos[j].dataEntrega,
+                                    imagemURL: response[i].produtos[j].imagemURL,
                                     disponivel: response[i].produtos[j].disponivel,
                                     valor: response[i].produtos[j].valor
                                 });

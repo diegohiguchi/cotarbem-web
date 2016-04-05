@@ -8,7 +8,7 @@
         <div  class="col-md-2">
           <div class="form-group" show-errors>
 
-            <label class="control-label" for="segmento">Segmentos</label>
+            <label class="control-label" for="segmento">Segmentos *</label>
             <select name="segmento" id="segmento" class="form-control" ng-model="vm.solicitacao.segmento"
                     ng-options="segmentos.nome for segmentos in vm.segmentos"
                     required ng-change="vm.filtrarSubSegmentosPorSegmento(vm.solicitacao.segmento)">
@@ -22,7 +22,7 @@
         <div  class="col-md-2 col-md-offset-1">
           <div class="form-group" show-errors>
 
-            <label class="control-label" for="subSegmento">Sub-Segmentos</label>
+            <label class="control-label" for="subSegmento">Sub-Segmentos *</label>
             <select name="subSegmento" id="subSegmento" class="form-control" ng-model="vm.solicitacao.subSegmento"
                     ng-options="subSegmentos.nome for subSegmentos in vm.subSegmentos"
                     required ng-disabled="vm.solicitacao.segmento == undefined">
@@ -35,7 +35,7 @@
         </div>
         <div  class="col-md-2 col-md-offset-1">
           <div class="form-group" show-errors>
-            <label class="control-label" for="tempoCotacao">Tempo para Cotação</label>
+            <label class="control-label" for="tempoCotacao">Tempo para Cotação *</label>
             <input name="tempoCotacao" type="time" ng-model="vm.solicitacao.tempoCotacao" id="tempoCotacao" class="form-control" required>
             <div ng-messages="vm.form.solicitacaoForm.tempoCotacao.$error" role="alert">
               <p class="help-block error-text" ng-message="required">Informe o tempo para cotação</p>
@@ -50,7 +50,7 @@
         <!--  <hr>-->
         <div class="col-md-3">
           <div class="form-group">
-            <label class="control-label"  for="nome">Nome do Produto</label>
+            <label class="control-label"  for="nome">Nome do Produto *</label>
             <input name="nome" type="text" ng-model="vm.produto.nome" id="nome" class="form-control" placeholder="Nome do Produto">
             <!-- <div ng-messages="vm.form.solicitacaoForm.nome.$error" role="alert">
                <p class="help-block error-text" ng-message="required">Informe o Nome do Produto</p>
@@ -68,7 +68,7 @@
         </div>
         <div class="col-md-3 col-md-offset-1">
           <div class="form-group">
-            <label class="control-label" for="unidadeMedida">Unidade de Medida</label>
+            <label class="control-label" for="unidadeMedida">Unidade de Medida *</label>
             <input name="unidadeMedida" type="text" ng-model="vm.produto.unidadeMedida" id="unidadeMedida" class="form-control" placeholder="Ex.: Caixa, Unidade, kg, m²">
             <!--<label class="control-label" for="tipoCotacao">Unidade de Medida</label>
             <select  name="tipoCotacao" id="tipoCotacao" class="form-control" ng-model="vm.produto.tipoCotacao"
@@ -80,9 +80,9 @@
              </div>-->
           </div>
         </div>
-        <div class="col-md-1 col-md-offset-0">
+        <div class="col-md-2 col-md-offset-0">
           <div class="form-group">
-            <label class="control-label" for="quantidade">Quantidade</label>
+            <label class="control-label" for="quantidade">Quantidade *</label>
             <input name="quantidade" type="number" ng-model="vm.produto.quantidade" id="quantidade" min="1" class="form-control" placeholder="0">
             <!-- <div ng-messages="vm.form.solicitacaoForm.quantidade.$error" role="alert">
                <p class="help-block error-text" ng-message="required">Informe a Quantidade</p>
@@ -147,7 +147,7 @@
           <td>{{produto.unidadeMedida}}</td>
           <td>{{produto.quantidade}}</td>
           <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
-          <td><img ng-src="{{produto.imagemURL}}" class="img-thumbnail user-profile-picture"></td>
+          <td><img ng-if="produto.imagemURL !== ''" ng-src="{{produto.imagemURL}}" class="img-thumbnail user-profile-picture"></td>
 
           <td>
             <button type="button" class="btn btn-warning btn-xs" ng-click="vm.editarProduto(produto)">
