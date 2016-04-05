@@ -141,15 +141,6 @@
                     vm.uploader.uploadAll();
                 else
                     notificarFornecedores(response);
-
-                /*Socket.emit('nova-solicitacao', res);
-
-                 notificacoesApiService.notificarFornecedores(solicitacao).success(function(response){
-                 /!* jshint ignore:start *!/
-                 toastr.success('Solicitação enviada com sucesso');
-                 /!* jshint ignore:end *!/
-                 $state.go('cotacoesCliente.list');
-                 });*/
             }
 
             function errorCallback(response) {
