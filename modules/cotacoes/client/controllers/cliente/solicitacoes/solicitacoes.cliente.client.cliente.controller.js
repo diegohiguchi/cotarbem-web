@@ -105,21 +105,6 @@
 
             vm.solicitacao.tempo = vm.solicitacao.tempoCotacao;
 
-            /*solicitacoesApiService.adicionar(vm.solicitacao).success(function(response){
-             vm.uploader.formData = response.data;
-             vm.uploader.uploadAll();
-             }).then(function(){
-             Socket.emit('nova-solicitacao', response);
-
-             notificacoesApiService.notificarFornecedores(solicitacao).success(function(response){
-             /!* jshint ignore:start *!/
-             toastr.success('Solicitação enviada com sucesso');
-             /!* jshint ignore:end *!/
-             $state.go('cotacoesCliente.list');
-             });
-             });
-             */
-
             // TODO: move create/update logic to service
             if (vm.solicitacao._id) {
                 vm.solicitacao.$update(successCallback, errorCallback);
