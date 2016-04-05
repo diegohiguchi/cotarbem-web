@@ -1122,8 +1122,12 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                 return;
             }
 
-            vm.produto = {};
-            vm.solicitacao.produtos.push(produto);
+            if(vm.uploader.queue.length > 0)
+                vm.uploader.uploadAll();
+            else {
+                vm.produto = {};
+                vm.solicitacao.produtos.push(produto);
+            }
             //vm.uploader.clearQueue();
             //vm.produto.imagemURL = '';
         };
@@ -1185,20 +1189,20 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
             }
 
             function successCallback(response) {
-                var solicitacao = {
-                    _id: response._id,
-                    subSegmento: response.subSegmento
-                };
+                /* var solicitacao = {
+                 _id: response._id,
+                 subSegmento: response.subSegmento,
+                 };
 
-                debugger
-                vm.uploader.onBeforeUploadItem = function(item){
-                    item.formData = [solicitacao];
-                };
+                 debugger*/
+                /*vm.uploader.onBeforeUploadItem = function(item){
+                 item.formData = [solicitacao];
+                 };
 
-                if(vm.uploader.queue.length > 0)
-                    vm.uploader.uploadAll();
-                else
-                    notificarFornecedores(response);
+                 if(vm.uploader.queue.length > 0)
+                 vm.uploader.uploadAll();
+                 else*/
+                notificarFornecedores(response);
             }
 
             function errorCallback(response) {
@@ -1250,11 +1254,14 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         vm.uploader.onSuccessItem = function (fileItem, response, status, headers) {
             // Show success message
             //$scope.success = true;
+            vm.produto.imagemURL = response.message;
+            vm.solicitacao.produtos.push(vm.produto);
+            vm.produto = {};
 
             // Clear upload buttons
             vm.cancelUpload();
 
-            notificarFornecedores(response);
+            /*notificarFornecedores(response);*/
         };
 
         // Called after the user has failed to uploaded a new picture
@@ -1670,7 +1677,7 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                 });
             }
         };
-    });
+    })
 })();
 
 (function () {
