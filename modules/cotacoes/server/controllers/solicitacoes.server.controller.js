@@ -31,6 +31,7 @@ exports.create = function(req, res) {
 };
 
 exports.uploadImages = function(req, res) {
+    console.log('entrou');
     var upload = multer(config.uploads.produtoUpload).array('novaImagemProduto');
     var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
 
