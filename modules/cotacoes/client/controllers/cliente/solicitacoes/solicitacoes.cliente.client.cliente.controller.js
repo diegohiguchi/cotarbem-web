@@ -50,10 +50,10 @@
                 return;
             }
 
-            vm.solicitacao.produtos.push(produto);
             vm.produto = {};
-            vm.uploader.clearQueue();
-            vm.produto.imagemURL = '';
+            vm.solicitacao.produtos.push(produto);
+            //vm.uploader.clearQueue();
+            //vm.produto.imagemURL = '';
         };
 
         vm.removerProduto = function(produto){
@@ -118,6 +118,7 @@
                     subSegmento: response.subSegmento
                 };
 
+                debugger
                 vm.uploader.onBeforeUploadItem = function(item){
                     item.formData = [solicitacao];
                 };
@@ -206,6 +207,10 @@
         // Cancel the upload process
         vm.cancelUpload = function () {
             vm.uploader.clearQueue();
+            vm.produto.imagemURL = '';
+        };
+
+        vm.cancelar = function () {
             vm.produto.imagemURL = '';
         };
     }
