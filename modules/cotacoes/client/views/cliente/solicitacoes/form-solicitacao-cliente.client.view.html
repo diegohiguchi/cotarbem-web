@@ -2,7 +2,7 @@
   <div class="page-header">
     <h2>Nova Cotação</h2>
   </div>
-  <form name="vm.form.solicitacaoForm" class="form-horizontal" ng-submit="vm.save(vm.form.solicitacaoForm.$valid)" novalidate>
+  <form name="vm.form.solicitacaoForm" enctype="multipart/form-data" class="form-horizontal" ng-submit="vm.save(vm.form.solicitacaoForm.$valid)" novalidate>
     <fieldset class="col-xs-12">
       <div class="row">
         <div  class="col-md-2">
@@ -148,8 +148,7 @@
           <td>{{produto.unidadeMedida}}</td>
           <td>{{produto.quantidade}}</td>
           <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
-          <td><img ng-if="produto.imagemURL !== ''" ng-src="{{produto.imagemURL}}" class="img-thumbnail user-profile-picture"></td>
-
+          <td><img ng-show="produto.imagemURL" ng-src="{{produto.imagemURL}}" class="img-thumbnail user-profile-picture"></td>
           <td>
             <button type="button" class="btn btn-warning btn-xs" ng-click="vm.editarProduto(produto)">
               <span class="glyphicon glyphicon-edit"></span> Editar

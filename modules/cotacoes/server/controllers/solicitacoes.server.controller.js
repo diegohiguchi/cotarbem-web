@@ -31,8 +31,25 @@ exports.create = function(req, res) {
 };
 
 exports.uploadImages = function(req, res) {
-    console.log('entrou');
-    var upload = multer(config.uploads.produtoUpload).array('novaImagemProduto');
+    var upload = multer(config.uploads.produtoUpload).single('novaImagemProduto');
+    var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
+
+    // Filtering to upload only images
+    upload.fileFilter = profileUploadFileFilter;
+
+    upload(req, res, function (uploadError) {
+        if (uploadError) {
+            return res.status(400).send({
+                message: 'Error occurred while uploading profile picture'
+            });
+        } else {
+            return res.status(200).send({
+                message: config.uploads.produtoUpload.dest + req.file.filename
+            });
+        }
+    });
+
+    /*var upload = multer(config.uploads.produtoUpload).array('novaImagemProduto', 2);
     var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
 
     // Filtering to upload only images
@@ -78,7 +95,7 @@ exports.uploadImages = function(req, res) {
 
             });
         }
-    });
+    });*/
 };
 
 /**
