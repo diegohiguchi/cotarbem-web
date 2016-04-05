@@ -79,18 +79,6 @@ exports.uploadImages = function(req, res) {
             });
         }
     });
-
-    /*for(var i = 0; i < solicitacoes.produtos.length; i++){
-     upload(req, res, function (uploadError) {
-     if (uploadError) {
-     return res.status(400).send({
-     message: 'Error occurred while uploading profile picture'
-     });
-     } else {
-     solicitacoes.produtos[i].imagemURL = config.uploads.produtoUpload.dest +  req[i].file.filename;
-     }
-     });
-     }*/
 };
 
 /**
