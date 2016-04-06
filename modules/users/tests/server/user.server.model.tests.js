@@ -268,7 +268,7 @@ describe('User Model Unit Tests:', function () {
       _user1.password = 'P@$$w0rd!';
 
       _user1.validate(function (err) {
-        err.errors.password.message.should.equal('The password must be at least 10 characters long.');
+        err.errors.password.message.should.equal('A senha deve ter pelo menos 10 caracteres.');
         done();
       });
     });
