@@ -85,7 +85,7 @@
       </td>
       <td>{{produto.valor * produto.quantidade | currency}}
       <td>
-        <textarea rows="3" ng-model="produto.observacao" placeholder="Observação"></textarea>
+        <textarea class="form-control" rows="3" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.observacao" placeholder="Observação"></textarea>
       </td>
     </tr>
     </tbody>
