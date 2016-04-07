@@ -120,7 +120,8 @@
                         dataEntrega: response[i].produtos[j].dataEntrega,
                         imagemURL: response[i].produtos[j].imagemURL,
                         disponivel: response[i].produtos[j].disponivel,
-                        valor: response[i].produtos[j].valor
+                        valor: response[i].produtos[j].valor,
+                        observacao: response[i].produtos[j].observacao
                     });
                 }
                 //}

@@ -82,7 +82,7 @@ var UserSchema = new Schema({
       enum: ['user', 'admin', 'cliente', 'fornecedor']
     }],
     default: ['user'],
-    required: 'Please provide at least one role'
+    required: 'Informe o tipo do usuário'
   },
   subSegmentos: [{
     type: Schema.ObjectId,

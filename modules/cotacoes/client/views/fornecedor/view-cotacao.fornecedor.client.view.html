@@ -68,6 +68,7 @@
       <th style="width: 8%">Disponível</th>
       <th style="width: 15%">Valor</th>
       <th style="width: 15%">Valor Total</th>
+      <th style="width: 15%">Observação</th>
     </tr>
     </thead>
     <tbody>
@@ -83,6 +84,9 @@
         <input class="form-control" type="text" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.valor" placeholder="R$ 0,00" ui-money-mask="2" maxlength="13">
       </td>
       <td>{{produto.valor * produto.quantidade | currency}}
+      <td>
+        <textarea rows="3" ng-model="produto.observacao" placeholder="Observação"></textarea>
+      </td>
     </tr>
     </tbody>
   </table>

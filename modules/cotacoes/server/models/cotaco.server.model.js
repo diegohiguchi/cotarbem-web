@@ -46,7 +46,8 @@ var CotacaoSchema = new Schema({
             default: ''
         },
         dataEntrega: Date,
-        valor: Number
+        valor: Number,
+        observacao: String
     }],
     dataCadastro: {
         type: Date,
