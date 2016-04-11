@@ -882,6 +882,9 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         vm.save = save;
 
         vm.marcaTodosItens = function () {
+            vm.produtosSelecionados = [];
+            vm.total = 0;
+
             if (vm.selecionaTodos) {
                 vm.selecionaTodos = true;
             } else {
@@ -894,10 +897,6 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
 
                     if(vm.selecionaTodos)
                         vm.adicionarProduto(item);
-                    else {
-                        vm.produtosSelecionados = [];
-                        vm.total = 0;
-                    }
                 });
             });
         };
