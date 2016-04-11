@@ -72,36 +72,66 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="produto in vm.solicitacao.produtos">
+    <tr ng-repeat="produto in vm.solicitacao.produtos" >
       <td>{{produto.nome}}</td>
       <td>{{produto.codigo}}</td>
       <td>{{produto.unidadeMedida}}</td>
       <td>{{produto.quantidade}}</td>
       <td>{{produto.dataEntrega | date:"dd/MM/yyyy" | semData }}</td>
       <td><img ng-if="produto.imagemURL !== ''" ng-src="{{produto.imagemURL}}" class="img-thumbnail user-profile-picture"></td>
-      <td><input type="checkbox" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.disponivel"></td>
       <td>
+        <input type="checkbox" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.disponivel">
+      </td>
+      <td >
         <input class="form-control" type="text" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.valor" placeholder="R$ 0,00" ui-money-mask="2" maxlength="13">
       </td>
       <td>{{produto.valor * produto.quantidade | currency}}
       <td>
-        <textarea class="form-control" rows="3" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.observacao" placeholder="Observação"></textarea>
+      <div class="container">
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-info" title="Observação" ng-disabled="!vm.solicitacao.ativo" data-toggle="modal"
+                data-target="#{{produto._id}}"><i class="glyphicon glyphicon-edit"></i>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="{{produto._id}}" role="dialog">
+          <div class="modal-dialog" role="document">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Produto: {{produto.nome}}</h4>
+              </div>
+              <div class="modal-body">
+                <textarea class="form-control" rows="6" ng-disabled="!vm.solicitacao.ativo" ng-model="produto.observacao" placeholder="Observação"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       </td>
     </tr>
+
+
     </tbody>
   </table>
- <!-- <div class="pull-right">
-    <span>Total: {{vm.calcularSomaTotal() | currency}}</span>
-  </div>-->
+  <!-- <div class="pull-right">
+     <span>Total: {{vm.calcularSomaTotal() | currency}}</span>
+   </div>-->
   <small>
     <em class="text-muted">
       Solicitado em
       <time data-ng-bind="vm.solicitacao.dataCadastro | date:'dd/MM/yyyy'"></time>
       <i class="glyphicon glyphicon-time"></i></td>
       <span  data-ng-bind="vm.solicitacao.dataCadastro | date:' HH:mm'"></span>
-     <!-- <span data-ng-if="vm.solicitacao.user"
-            data-ng-bind="vm.solicitacao.user.displayName"></span>
-      <span data-ng-if="!vm.solicitacao.user">Deleted User</span>-->
+      <!-- <span data-ng-if="vm.solicitacao.user"
+             data-ng-bind="vm.solicitacao.user.displayName"></span>
+       <span data-ng-if="!vm.solicitacao.user">Deleted User</span>-->
     </em>
   </small>
   <p></p>

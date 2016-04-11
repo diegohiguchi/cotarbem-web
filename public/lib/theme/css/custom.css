@@ -27,7 +27,7 @@ textarea {
 }
 
 ::selection {
-	background:#f25253;
+	background:#48A3B5;
 	color:#ffffff;
 }
 ::-moz-selection {
@@ -36,7 +36,11 @@ textarea {
 }
 
 a {
-	color:#f25253;
+	color:#48A3B5;
+}
+
+td.observt {
+	background-color: #f9f9f9;
 }
 
 .color {

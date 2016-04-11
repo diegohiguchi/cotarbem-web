@@ -26,6 +26,27 @@
         vm.remove = remove;
         vm.save = save;
 
+        vm.marcaTodosItens = function () {
+            if (vm.selecionaTodos) {
+                vm.selecionaTodos = true;
+            } else {
+                vm.selecionaTodos = false;
+            }
+
+            angular.forEach(vm.cotacoes, function (produto) {
+                produto.forEach(function(item){
+                    item.selecionado = vm.selecionaTodos;
+
+                    if(vm.selecionaTodos)
+                        vm.adicionarProduto(item);
+                    else {
+                        vm.produtosSelecionados = [];
+                        vm.total = 0;
+                    }
+                });
+            });
+        };
+
         // Remove existing Cotacao
         function remove() {
             if (confirm('Are you sure you want to delete?')) {
@@ -113,6 +134,7 @@
                 for(var j = 0; j < response[i].produtos.length; j++){
                     vm.cotacoes.push({
                         user: response[i].user,
+                        _id: response[i].produtos[j]._id,
                         nome: response[i].produtos[j].nome,
                         codigo: response[i].produtos[j].codigo,
                         unidadeMedida: response[i].produtos[j].unidadeMedida,

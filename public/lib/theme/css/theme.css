@@ -1208,6 +1208,28 @@ h6 {
 .page_title_block {
 }
 
+.page-header h3 {
+	margin-bottom: 0px !important;
+}
+
+.page-header {
+	margin: 29px 0 20px !important;
+}
+
+.observ {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+.modal-backdrop.in {
+	opacity: 0 !important;
+}
+
+td.observt {
+	padding:0px !important;
+	border-top: none !important;
+}
+
 .module_descr,
 .page_descr {
 	padding-bottom:30px;
@@ -7374,6 +7396,8 @@ h2.portf_title a {
 
 .pb20 {
 	padding-bottom:20px;
+	padding-right: 40px;
+	padding-left: 40px;
 }
 
 .pb22 {
@@ -7386,6 +7410,7 @@ h2.portf_title a {
 
 .pb30 {
 	padding-bottom:30px;
+	padding-left: 50px;
 }
 
 .pb33 {
@@ -7426,6 +7451,7 @@ h2.portf_title a {
 
 .pb65 {
 	padding-bottom:65px;
+	padding-left: 45px;
 }
 
 .pb70 {
@@ -7434,6 +7460,8 @@ h2.portf_title a {
 
 .pb80 {
 	padding-bottom:80px;
+	padding-right: 50px;
+	padding-left: 35px;
 }
 
 .pb85 {
@@ -7450,6 +7478,8 @@ h2.portf_title a {
 
 .pb95 {
 	padding-bottom:95px;
+	padding-right: 35px;
+	padding-left: 35px;
 }
 
 .pb100 {
@@ -9433,7 +9463,7 @@ body.mfp-zoom-out-cur {
 
 @media (min-width: 1200px) {
 	.container {
-		width: 1200px;
+		width: 100%;
 	}
 	.countdown-amount {
 		padding: 0 55px 0 55px;

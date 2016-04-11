@@ -43,11 +43,15 @@ var CotacaoSchema = new Schema({
         },
         imagemURL: {
             type: String,
-            default: ''
+            default: '',
         },
         dataEntrega: Date,
         valor: Number,
-        observacao: String
+        observacao: {
+            type: String,
+            default: '',
+            trim: true
+        }
     }],
     dataCadastro: {
         type: Date,
