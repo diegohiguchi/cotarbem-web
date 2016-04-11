@@ -257,7 +257,7 @@ exports.notificarFornecedoresProdutos = function (req, res, next) {
             var emailHtml = '<table border="1px; solid black;" style="border-collapse: collapse;"><thead>' +
                 '                <tr>' +
                 '                <th>Nome do Produto</th>' +
-                '            <th>Tipo da Cotação</th>' +
+                '            <th>Unidade de Medida</th>' +
                 '            <th>Quantidade</th>' +
                 '            <th>Data de Entrega</th>' +
                 '            <th>Valor</th>' +
@@ -269,7 +269,7 @@ exports.notificarFornecedoresProdutos = function (req, res, next) {
 
                 var dataEntrega = produtosSelecionados[j].dataEntrega === undefined ? "-" : moment(new Date(produtosSelecionados[j].dataEntrega)).format("DD/MM/YYYY");
 
-                emailHtml = emailHtml.concat('<tr><td>'+ produtosSelecionados[j].nome +'</td><td>'+ produtosSelecionados[j].tipoCotacao +'</td>' +
+                emailHtml = emailHtml.concat('<tr><td>'+ produtosSelecionados[j].nome +'</td><td>'+ produtosSelecionados[j].unidadeMedida +'</td>' +
                     '<td>'+ produtosSelecionados[j].quantidade +'</td>'+
                     '<td>' + dataEntrega +'</td>' +
                     '<td>'+ produtosSelecionados[j].valor +'</td>' +
