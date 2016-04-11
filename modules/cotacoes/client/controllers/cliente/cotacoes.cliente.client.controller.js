@@ -27,6 +27,9 @@
         vm.save = save;
 
         vm.marcaTodosItens = function () {
+            vm.produtosSelecionados = [];
+            vm.total = 0;
+
             if (vm.selecionaTodos) {
                 vm.selecionaTodos = true;
             } else {
@@ -39,10 +42,6 @@
 
                     if(vm.selecionaTodos)
                         vm.adicionarProduto(item);
-                    else {
-                        vm.produtosSelecionados = [];
-                        vm.total = 0;
-                    }
                 });
             });
         };
