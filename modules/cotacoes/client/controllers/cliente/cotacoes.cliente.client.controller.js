@@ -47,18 +47,6 @@
             });
         };
 
-        function montarExcel(){
-            vm.dadosExcel = [];
-            var produtos = ['Nome da Empresa', 'Nome do Produto', 'Código', 'Undiade de Medida', 'Quantidade', 'Data de Entrega',
-                'Disponível', 'Valor', 'Valor Total'];
-            vm.dadosExcel.push(produtos);
-
-            vm.produtosSelecionados.forEach(function(produto){
-                produtos = [produto.user.displayName, produto.nome, produto.codigo, produto.unidadeMedida, produto.quantidade,
-                    produto.dataEntrega, (produto.disponivel === true ? 'Sim' : 'Não'), produto.valor, (produto.quantidade * produto.valor)];
-                vm.dadosExcel.push(produtos);
-            });
-        }
 
         // Remove existing Cotacao
         function remove() {
@@ -140,9 +128,25 @@
             $state.go('cotacoesCliente.list');
         };
 
+        function preencherDadosSelecionadosParaExcel(){
+           vm.dadosExcel = [];
+            var produtos = ['Nome da Empresa', 'Nome do Produto', 'Código', 'Undiade de Medida', 'Quantidade', 'Data de Entrega',
+                'Disponível', 'Valor', 'Valor Total'];
+            
+            vm.dadosExcel.push(produtos);
+
+            vm.produtosSelecionados.forEach(function(produto){
+                produtos = [produto.user.displayName, produto.nome, produto.codigo, produto.unidadeMedida, produto.quantidade,
+                    produto.dataEntrega === undefined ? '-' : moment(produto.dataEntrega).format('DD/MM/YYYY'), (produto.disponivel === true ? 'Sim' : 'Não'), produto.valor,
+                    (produto.quantidade * produto.valor)];
+
+                vm.dadosExcel.push(produtos);
+            });
+        }
+
         vm.exportarExcel = function(){
 
-            montarExcel();
+            preencherDadosSelecionadosParaExcel();
 
             function datenum(v, date1904) {
                 if(date1904) v+=1462;
@@ -150,7 +154,7 @@
                 return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
             }
 
-            function sheet_from_array_of_arrays(data, opts) {
+            function montarTabelaExcel(data, opts) {
                 var ws = {};
                 var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
                 for(var R = 0; R != data.length; ++R) {
@@ -190,7 +194,7 @@
                 this.Sheets = {};
             }
 
-            var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
+            var wb = new Workbook(), ws = montarTabelaExcel(data);
 
             /* add worksheet to workbook */
             wb.SheetNames.push(ws_name);
