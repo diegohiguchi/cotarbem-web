@@ -3205,7 +3205,7 @@ angular.module('users').factory('PasswordValidator', ['$window',
         return result;
       },
       getPopoverMsg: function () {
-        var popoverMsg = 'Por favor insira uma senha com mais de 6 caracteres, com número(s), letras minúsculas, maiúsculas e caracteres especiais.';
+        var popoverMsg = 'Por favor insira uma senha com no mínimo 6 caracteres, com número(s), letras minúsculas, maiúsculas e caracteres especiais.';
         return popoverMsg;
       }
     };
