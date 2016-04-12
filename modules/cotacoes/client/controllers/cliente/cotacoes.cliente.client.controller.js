@@ -132,7 +132,7 @@
            vm.dadosExcel = [];
             var produtos = ['Nome da Empresa', 'Nome do Produto', 'Código', 'Undiade de Medida', 'Quantidade', 'Data de Entrega',
                 'Disponível', 'Valor', 'Valor Total'];
-            
+
             vm.dadosExcel.push(produtos);
 
             vm.produtosSelecionados.forEach(function(produto){
