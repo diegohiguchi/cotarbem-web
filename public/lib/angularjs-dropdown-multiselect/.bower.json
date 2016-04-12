@@ -46,7 +46,7 @@
     "tag": "1.5.2",
     "commit": "d938709876db452fbf90212867289bddb123e25d"
   },
-  "_source": "git://github.com/dotansimha/angularjs-dropdown-multiselect.git",
+  "_source": "https://github.com/dotansimha/angularjs-dropdown-multiselect.git",
   "_target": "^1.5.2",
   "_originalSource": "angularjs-dropdown-multiselect"
 }

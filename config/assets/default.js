@@ -40,7 +40,12 @@ module.exports = {
         'public/lib/theme/jquery.flexslider-min.js',
         'public/lib/theme/jquery.isotope.min.js',
         'public/lib/theme/sorting.js',
-        'public/lib/theme/slick.js'
+        'public/lib/theme/slick.js',
+        'public/lib/js-xlsx/dist/xlsx.core.min.js',
+        'public/lib/Blob/Blob.js',
+        'public/lib/file-saver.js/FileSaver.js',
+        'public/lib/angular-sanitize/angular-sanitize.min.js',
+        'public/lib/ng-csv/build/ng-csv.min.js'
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },

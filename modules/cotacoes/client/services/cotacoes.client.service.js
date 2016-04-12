@@ -26,8 +26,13 @@
       return $http.get('/api/cotacoes/obterPorSolicitacaoId/' + id);
     }
 
+    function exportarParaExcel(produtos) {
+      return $http.post('/api/cotacoes/exportarParaExcel', produtos);
+    }
+
     var services = {
-      obterPorSolicitacaoId: obterPorSolicitacaoId
+      obterPorSolicitacaoId: obterPorSolicitacaoId,
+      exportarParaExcel: exportarParaExcel
     };
 
     return services;

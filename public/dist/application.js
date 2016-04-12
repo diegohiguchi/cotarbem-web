@@ -5,7 +5,7 @@ var ApplicationConfiguration = (function () {
   // Init module configuration options
   var applicationModuleName = 'mean';
   var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstrap', 'ui.utils',
-    'angularFileUpload', 'angularjs-dropdown-multiselect', 'ui.utils.masks', 'angular-loading-bar'];
+    'angularFileUpload', 'angularjs-dropdown-multiselect', 'ui.utils.masks', 'angular-loading-bar', 'ngSanitize', 'ngCsv'];
 
   // Add a new vertical module
   var registerModule = function (moduleName, dependencies) {
@@ -874,6 +874,7 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         vm.itensSelecionados = [];
         vm.produtosSelecionados = [];
         vm.fornecedoresSelecionados = [];
+        vm.dadosExcel = [];
         vm.solicitacao = cotacaoResolve;
         vm.error = null;
         vm.form = {};
@@ -900,6 +901,19 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
                 });
             });
         };
+
+        function montarExcel(){
+            vm.dadosExcel = [];
+            var produtos = ['Nome da Empresa', 'Nome do Produto', 'Código', 'Undiade de Medida', 'Quantidade', 'Data de Entrega',
+                'Disponível', 'Valor', 'Valor Total'];
+            vm.dadosExcel.push(produtos);
+
+            vm.produtosSelecionados.forEach(function(produto){
+                produtos = [produto.user.displayName, produto.nome, produto.codigo, produto.unidadeMedida, produto.quantidade,
+                    produto.dataEntrega, (produto.disponivel === true ? 'Sim' : 'Não'), produto.valor, (produto.quantidade * produto.valor)];
+                vm.dadosExcel.push(produtos);
+            });
+        }
 
         // Remove existing Cotacao
         function remove() {
@@ -980,6 +994,74 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
         vm.voltar = function(){
             $state.go('cotacoesCliente.list');
         };
+
+        vm.exportarExcel = function(){
+
+            montarExcel();
+
+            function datenum(v, date1904) {
+                if(date1904) v+=1462;
+                var epoch = Date.parse(v);
+                return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
+            }
+
+            function sheet_from_array_of_arrays(data, opts) {
+                var ws = {};
+                var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
+                for(var R = 0; R != data.length; ++R) {
+                    for(var C = 0; C != data[R].length; ++C) {
+                        if(range.s.r > R) range.s.r = R;
+                        if(range.s.c > C) range.s.c = C;
+                        if(range.e.r < R) range.e.r = R;
+                        if(range.e.c < C) range.e.c = C;
+                        var cell = {v: data[R][C] };
+                        if(cell.v == null) continue;
+                        var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
+
+                        if(typeof cell.v === 'number') cell.t = 'n';
+                        else if(typeof cell.v === 'boolean') cell.t = 'b';
+                        else if(cell.v instanceof Date) {
+                            cell.t = 'n'; cell.z = XLSX.SSF._table[14];
+                            cell.v = datenum(cell.v);
+                        }
+                        else cell.t = 's';
+
+                        ws[cell_ref] = cell;
+                    }
+                }
+                if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
+                return ws;
+            }
+
+            /* original data */
+            /* var data = [[1,2,3],[true, false, null, "sheetjs"],["foo","bar",new Date("2014-02-19T14:30Z"), "0.3"], ["baz", null, "qux"]]*/
+
+            var data = vm.dadosExcel;
+            var ws_name = "Cotação - " + vm.solicitacao.subSegmento.nome;
+
+            function Workbook() {
+                if(!(this instanceof Workbook)) return new Workbook();
+                this.SheetNames = [];
+                this.Sheets = {};
+            }
+
+            var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
+
+            /* add worksheet to workbook */
+            wb.SheetNames.push(ws_name);
+            wb.Sheets[ws_name] = ws;
+            var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
+
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
+            saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), "cotacao.xlsx")
+        }
+
 
         function listarCotacoes(response){
             //CotacoesService.query().$promise.then(function(response){
@@ -1753,8 +1835,13 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
       return $http.get('/api/cotacoes/obterPorSolicitacaoId/' + id);
     }
 
+    function exportarParaExcel(produtos) {
+      return $http.post('/api/cotacoes/exportarParaExcel', produtos);
+    }
+
     var services = {
-      obterPorSolicitacaoId: obterPorSolicitacaoId
+      obterPorSolicitacaoId: obterPorSolicitacaoId,
+      exportarParaExcel: exportarParaExcel
     };
 
     return services;

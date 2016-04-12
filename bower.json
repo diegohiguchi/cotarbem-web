@@ -21,7 +21,11 @@
     "toastr": "^2.1.2",
     "angular-input-masks": "^2.1.1",
     "moment": "^2.12.0",
-    "angular-loading-bar": "^0.9.0"
+    "angular-loading-bar": "^0.9.0",
+    "file-saver.js": "^1.20150507.2",
+    "ng-csv": "^0.3.6",
+    "js-xlsx": "^0.8.0",
+    "Blob": "*"
   },
   "resolutions": {
     "angular": "~1.3.2"
