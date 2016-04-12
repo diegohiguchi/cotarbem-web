@@ -360,7 +360,7 @@ describe('User CRUD tests', function () {
           User.findOne({ username: user.username.toLowerCase() }, function(err, userRes) {
             userRes.resetPasswordToken.should.not.be.empty();
             should.exist(userRes.resetPasswordExpires);
-            res.body.message.should.be.equal('Failure sending email');
+            res.body.message.should.be.equal('Houve uma falha no envio do e-mail');
             return done();
           });
         });
