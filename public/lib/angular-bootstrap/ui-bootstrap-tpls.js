@@ -3105,14 +3105,15 @@ angular.module('ui.bootstrap.pagination', [])
   itemsPerPage: 10,
   boundaryLinks: false,
   directionLinks: true,
-  firstText: 'First',
-  previousText: 'Previous',
-  nextText: 'Next',
-  lastText: 'Last',
+  firstText: 'Primeiro',
+  previousText: 'Anterior',
+  nextText: 'Próximo',
+  lastText: 'Último',
   rotate: true
 })
 
 .directive('pagination', ['$parse', 'paginationConfig', function($parse, paginationConfig) {
+
   return {
     restrict: 'EA',
     scope: {
@@ -3224,8 +3225,8 @@ angular.module('ui.bootstrap.pagination', [])
 
 .constant('pagerConfig', {
   itemsPerPage: 10,
-  previousText: '« Previous',
-  nextText: 'Next »',
+  previousText: '« Anterior',
+  nextText: 'P´roximo »',
   align: true
 })
 
