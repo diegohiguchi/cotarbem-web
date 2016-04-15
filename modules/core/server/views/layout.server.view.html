@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -58,6 +58,63 @@
   <!--Livereload script rendered -->
   <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
   {% endif %}
+  
+  <script type="text/javascript">
+      function mudarValorSouCliente(){
+         var opcao = document.getElementById('lstSouCliente').value;
+         if(opcao == "PlanoMensal"){
+                 $("#precoSouCliente").html("<strong>R$ 99,00 / Mês</strong>")
+             }
+         else if(opcao == "PlanoTrimestral"){
+                        $("#precoSouCliente").html("<strong>R$282,15 / 3 Meses</strong>")
+                        
+               } 
+            else if(opcao == "PlanoSemestral"){
+                        $("#precoSouCliente").html("<strong>R$534,60 / 6 Meses</strong>")
+                        
+               } 
+            else if(opcao == "PlanoAnual"){
+                        $("#precoSouCliente").html("<strong>R$1.009,80 / Ano</strong>")
+                        
+               } 
+      }
+      function mudarValorSouFornecedor(){
+         var opcao = document.getElementById('lstSouFornecedor').value;
+         if(opcao == "PlanoMensal"){
+                 $("#precoSouFornecedor").html("<strong>R$ 49,00 / Mês</strong>")
+                    }
+         else if(opcao == "PlanoTrimestral"){
+                        $("#precoSouFornecedor").html("<strong>R$139,65 / 3 Meses</strong>")
+                        
+               } 
+           else if(opcao == "PlanoSemestral"){
+                        $("#precoSouFornecedor").html("<strong>R$264,60 / 6 Meses</strong>")
+                        
+               } 
+           else if(opcao == "PlanoAnual"){
+                        $("#precoSouFornecedor").html("<strong>R$499,80 / Ano</strong>")
+                        
+               } 
+      }
+      function mudarValorSouClienteFornecedor(){
+         var opcao = document.getElementById('lstSouClienteFornecedor').value;
+         if(opcao == "PlanoMensal"){
+                 $("#precoSouClienteFornecedor").html("<strong>R$130,00 / Mês</strong>")
+                    }
+         else if(opcao == "PlanoTrimestral"){
+                        $("#precoSouClienteFornecedor").html("<strong>R$370,50 / 3 Meses</strong>")
+                        
+               } 
+           else if(opcao == "PlanoSemestral"){
+                        $("#precoSouClienteFornecedor").html("<strong>R$702,00 / 6 Meses</strong>")
+                        
+               } 
+           else if(opcao == "PlanoAnual"){
+                        $("#precoSouClienteFornecedor").html("<strong>R$1.326,00 / Ano</strong>")
+                        
+               } 
+      }
+  </script>
 </body>
 
 </html>
